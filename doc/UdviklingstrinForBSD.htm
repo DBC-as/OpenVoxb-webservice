@@ -1,0 +1,1802 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./UdviklingstrinForBSD-filer/filelist.xml">
+<title>Udviklingstrin for BSD</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Hans-Henrik Lund</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Hans-Henrik Lund</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>331</o:TotalTime>
+  <o:LastPrinted>2010-02-19T12:36:00Z</o:LastPrinted>
+  <o:Created>2010-02-25T15:49:00Z</o:Created>
+  <o:LastSaved>2010-02-25T15:49:00Z</o:LastSaved>
+  <o:Pages>6</o:Pages>
+  <o:Words>1254</o:Words>
+  <o:Characters>7148</o:Characters>
+  <o:Company>Dansk BiblioteksCenter A/S</o:Company>
+  <o:Lines>59</o:Lines>
+  <o:Paragraphs>14</o:Paragraphs>
+  <o:CharactersWithSpaces>8778</o:CharactersWithSpaces>
+  <o:Version>9.6926</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:HyphenationZone>21</w:HyphenationZone>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:536871559 0 0 0 415 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:Verdana;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:Arial;
+	mso-font-kerning:16.0pt;
+	mso-bidi-font-weight:bold;}
+h1
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:16.0pt;
+	font-family:Arial;
+	mso-font-kerning:16.0pt;}
+h2
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:14.0pt;
+	font-family:Arial;
+	mso-font-kerning:16.0pt;
+	font-style:italic;}
+h3
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:13.0pt;
+	font-family:Arial;
+	mso-font-kerning:16.0pt;}
+h4
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:4;
+	font-size:12.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:Verdana;
+	mso-bidi-font-family:Arial;
+	mso-font-kerning:16.0pt;
+	mso-bidi-font-weight:normal;}
+h5
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:5;
+	font-size:11.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:Verdana;
+	mso-bidi-font-family:Arial;
+	mso-font-kerning:16.0pt;
+	mso-bidi-font-weight:normal;}
+h6
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:6;
+	font-size:9.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:Verdana;
+	mso-bidi-font-family:Arial;
+	mso-font-kerning:16.0pt;
+	mso-ansi-language:EN-GB;
+	font-weight:normal;
+	mso-bidi-font-weight:bold;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 249.3pt right 498.6pt;
+	font-size:9.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:Verdana;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:Arial;
+	mso-font-kerning:16.0pt;
+	mso-bidi-font-weight:bold;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 249.3pt right 498.6pt;
+	font-size:9.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:Verdana;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:Arial;
+	mso-font-kerning:16.0pt;
+	mso-bidi-font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+@page Section1
+	{size:612.0pt 792.0pt;
+	margin:3.0cm 2.0cm 3.0cm 2.0cm;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-header:url("./UdviklingstrinForBSD-filer/header.htm") h1;
+	mso-footer:url("./UdviklingstrinForBSD-filer/header.htm") f1;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:95639509;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-2049806214 67502081 67502083 67502085 67502081 67502083 67502085 67502081 67502083 67502085;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+@list l1
+	{mso-list-id:217130436;
+	mso-list-type:hybrid;
+	mso-list-template-ids:615262716 67502081 67502083 67502085 67502081 67502083 67502085 67502081 67502083 67502085;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+@list l2
+	{mso-list-id:282002001;
+	mso-list-type:hybrid;
+	mso-list-template-ids:988986870 67502095 67502105 67502107 67502095 67502105 67502107 67502095 67502105 67502107;}
+@list l2:level1
+	{mso-level-tab-stop:54.0pt;
+	mso-level-number-position:left;
+	margin-left:54.0pt;
+	text-indent:-18.0pt;}
+@list l3
+	{mso-list-id:303511781;
+	mso-list-type:hybrid;
+	mso-list-template-ids:577658494 67502101 67502083 67502085 67502081 67502083 67502085 67502081 67502083 67502085;}
+@list l3:level1
+	{mso-level-number-format:alpha-upper;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l3:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l4
+	{mso-list-id:314452701;
+	mso-list-type:hybrid;
+	mso-list-template-ids:996456232 67502101 67502105 67502107 67502095 67502105 67502107 67502095 67502105 67502107;}
+@list l4:level1
+	{mso-level-number-format:alpha-upper;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l5
+	{mso-list-id:442192806;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1138082756 67502101 67502105 67502107 67502095 67502105 67502107 67502095 67502105 67502107;}
+@list l5:level1
+	{mso-level-number-format:alpha-upper;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l6
+	{mso-list-id:917206980;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1062942868 67502081 67502083 67502085 67502081 67502083 67502085 67502081 67502083 67502085;}
+@list l6:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+@list l7
+	{mso-list-id:984704206;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-520698274 67502081 67502083 67502085 67502081 67502083 67502085 67502081 67502083 67502085;}
+@list l7:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+@list l8
+	{mso-list-id:1133017993;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-207179298 67502101 67502105 67502107 67502095 67502105 67502107 67502095 67502105 67502107;}
+@list l8:level1
+	{mso-level-number-format:alpha-upper;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l9
+	{mso-list-id:1153915916;
+	mso-list-type:hybrid;
+	mso-list-template-ids:577658494 67502081 67502083 67502085 67502081 67502083 67502085 67502081 67502083 67502085;}
+@list l9:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+@list l9:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l10
+	{mso-list-id:1584334103;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1012367704 67502101 67502105 67502107 67502095 67502105 67502107 67502095 67502105 67502107;}
+@list l10:level1
+	{mso-level-number-format:alpha-upper;
+	mso-level-tab-stop:54.0pt;
+	mso-level-number-position:left;
+	margin-left:54.0pt;
+	text-indent:-18.0pt;}
+@list l11
+	{mso-list-id:1658218209;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1048356280 67502081 67502083 67502085 67502081 67502083 67502085 67502081 67502083 67502085;}
+@list l11:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+@list l11:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l12
+	{mso-list-id:1708793695;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1519277028 67502081 67502083 67502085 67502081 67502083 67502085 67502081 67502083 67502085;}
+@list l12:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+</head>
+
+<body lang=DA link=blue vlink=purple style='tab-interval:65.2pt'>
+
+<div class=Section1>
+
+<h1><span style='font-size:10.0pt;mso-bidi-font-size:16.0pt;font-family:Verdana'>22.
+februar 2010<span style="mso-spacerun: yes">  </span>/ Dbc / hhl<o:p></o:p></span></h1>
+
+<p class=MsoNormal>Dette dokument ligger i BSD dropbox og på </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span><span
+class=MsoHyperlink>https://voxb.addi.dk/</span><span class=MsoHyperlink><b
+style='mso-bidi-font-weight:normal'><i>version</i></b>/doc/UdviklingstrinForBSD.htm</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h1><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></h1>
+
+<h1>Udviklingstrin for BSD</h1>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Udviklingstrinene vil være de tiltag som DBC skal udføre i
+BSD projektet.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>web-servicen voxb findes på https://voxb.addi.dk </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Version 0.1 indeholder:</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l12 level1 lfo1;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span style='font-size:10.0pt;font-family:Arial;
+color:blue'>oprette en bruger (createUserRequest) og hent en bruger
+(fetchUserRequest)</span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l12 level1 lfo1;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span style='font-size:10.0pt;font-family:Arial;
+color:blue'>oprette en anmeldelse, rating, tag eller lokaldata
+(createMyDataRequest)</span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l12 level1 lfo1;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span style='font-size:10.0pt;font-family:Arial;
+color:blue'>finde og hente en anmeldelse, rating, tag eller lokaldata
+(fetchDataRequest)</span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l12 level1 lfo1;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span style='font-size:10.0pt;font-family:Arial;
+color:blue'>hente brugerens samlede anmeldelser, rating, tag og loakaldata
+(fetchMyDataRequest)</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h2>To do list</h2>
+
+<p class=MsoNormal>Nedenstående tabeller er ikke udtryk for hvornår en
+aktivitet går i gang men kun i hvilken måned den forventes færdig.<span
+style="mso-spacerun: yes">   </span>Vi vil stræbe efter at have en release hver
+den 1. i måneden.<span style="mso-spacerun: yes">  </span>Dette dokument vil
+blive opdateret umiddelbart inden release, så man kan se hvilke funktioner der
+er med i den kommende release.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoHeader style='tab-stops:65.2pt'>De næste tiltag i BSD bliver</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<table border=1 cellspacing=0 cellpadding=0 width=677 style='width:507.7pt;
+ border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0cm 3.5pt 0cm 3.5pt'>
+ <tr style='height:19.15pt'>
+  <td width=677 colspan=4 valign=top style='width:507.7pt;border:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:19.15pt'>
+  <h4>Februar 2010 Version 0.2</h4>
+  </td>
+ </tr>
+ <tr style='height:18.05pt'>
+  <td width=169 valign=top style='width:126.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:18.05pt'>
+  <h5>Navn</h5>
+  </td>
+  <td width=88 valign=top style='width:66.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:18.05pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;mso-bidi-font-size:16.0pt'>Ansvarlig<o:p></o:p></span></b></p>
+  </td>
+  <td width=349 valign=top style='width:262.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:18.05pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;mso-bidi-font-size:16.0pt'>Bemærkning<o:p></o:p></span></b></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:18.05pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;mso-bidi-font-size:16.0pt'>færdig<o:p></o:p></span></b></p>
+  </td>
+ </tr>
+ <tr style='height:13.55pt'>
+  <td width=169 valign=top style='width:126.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:13.55pt'>
+  <p class=MsoNormal><span style='color:#999999'>Moderator funktioner<o:p></o:p></span></p>
+  </td>
+  <td width=88 valign=top style='width:66.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:13.55pt'>
+  <p class=MsoNormal><span style='color:#999999'>MKR<o:p></o:p></span></p>
+  </td>
+  <td width=349 valign=top style='width:262.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:13.55pt'>
+  <p class=MsoNormal><span style='color:#999999'>Udskydes til version 0.3<o:p></o:p></span></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:13.55pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='height:14.65pt'>
+  <td width=169 valign=top style='width:126.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:14.65pt'>
+  <p class=MsoNormal><a href="#_searchData">SearchData</a> </p>
+  </td>
+  <td width=88 valign=top style='width:66.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal>MKR</p>
+  </td>
+  <td width=349 valign=top style='width:262.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='height:15.8pt'>
+  <td width=169 valign=top style='width:126.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:15.8pt'>
+  <p class=MsoNormal><a href="#_updateUser_og_deleteUser">updateUser og
+  deleteUser</a> </p>
+  </td>
+  <td width=88 valign=top style='width:66.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal>MKR</p>
+  </td>
+  <td width=349 valign=top style='width:262.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal>Ændring i XSD</p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal>OK</p>
+  </td>
+ </tr>
+ <tr style='height:15.8pt'>
+  <td width=169 valign=top style='width:126.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:15.8pt'>
+  <p class=MsoNormal><a href="#_updateMydata_og_deleteMydata">updateMyData og
+  deleteMyData </a></p>
+  </td>
+  <td width=88 valign=top style='width:66.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal>MKR</p>
+  </td>
+  <td width=349 valign=top style='width:262.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal>Ændring i XSD</p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal>OK</p>
+  </td>
+ </tr>
+ <tr style='height:15.8pt'>
+  <td width=169 valign=top style='width:126.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:15.8pt'>
+  <p class=MsoNormal><a href="#_Index_performance_tuning">Index performance
+  tuning</a></p>
+  </td>
+  <td width=88 valign=top style='width:66.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal>MKR</p>
+  </td>
+  <td width=349 valign=top style='width:262.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal>OK</p>
+  </td>
+ </tr>
+ <tr style='height:15.8pt'>
+  <td width=169 valign=top style='width:126.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:15.8pt'>
+  <p class=MsoNormal><a href="#_Afgrænse_web-sitet">Begrænse tilgang til kun at
+  være https</a></p>
+  </td>
+  <td width=88 valign=top style='width:66.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal>HHL</p>
+  </td>
+  <td width=349 valign=top style='width:262.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal>OK</p>
+  </td>
+ </tr>
+ <tr style='height:15.8pt'>
+  <td width=169 valign=top style='width:126.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:15.8pt'>
+  <p class=MsoNormal><a href="#_Kryptering">Krypter data der bliver lagt i
+  databasen (CPR</a>)</p>
+  </td>
+  <td width=88 valign=top style='width:66.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal>MKR</p>
+  </td>
+  <td width=349 valign=top style='width:262.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal>OK</p>
+  </td>
+ </tr>
+ <tr style='height:15.8pt'>
+  <td width=169 valign=top style='width:126.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:15.8pt'>
+  <p class=MsoNormal><a href="#_Versionering_af_udviklingsplatform">Versionering
+  af udviklingen</a></p>
+  </td>
+  <td width=88 valign=top style='width:66.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal><span lang=DE style='mso-ansi-language:DE'>HHL<o:p></o:p></span></p>
+  </td>
+  <td width=349 valign=top style='width:262.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span lang=DE
+  style='mso-ansi-language:DE'><o:p></o:p></span></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.8pt'>
+  <p class=MsoNormal><span lang=DE style='mso-ansi-language:DE'>OK<o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=DE style='mso-ansi-language:DE'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=DE style='mso-ansi-language:DE'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=1 cellspacing=0 cellpadding=0 width=677 style='width:507.7pt;
+ border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0cm 3.5pt 0cm 3.5pt'>
+ <tr style='height:19.15pt'>
+  <td width=677 colspan=4 valign=top style='width:507.7pt;border:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:19.15pt'>
+  <h4><span lang=DE style='mso-ansi-language:DE'>Marts 2010 Version 0.3<o:p></o:p></span></h4>
+  </td>
+ </tr>
+ <tr style='height:18.05pt'>
+  <td width=169 valign=top style='width:126.85pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:18.05pt'>
+  <h5>Navn</h5>
+  </td>
+  <td width=89 valign=top style='width:66.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:18.05pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;mso-bidi-font-size:16.0pt'>Ansvarlig<o:p></o:p></span></b></p>
+  </td>
+  <td width=349 valign=top style='width:261.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:18.05pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;mso-bidi-font-size:16.0pt'>Bemærkning<o:p></o:p></span></b></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:18.05pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;mso-bidi-font-size:16.0pt'>færdig<o:p></o:p></span></b></p>
+  </td>
+ </tr>
+ <tr style='height:13.55pt'>
+  <td width=169 valign=top style='width:126.85pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:13.55pt'>
+  <p class=MsoNormal>Moderator funktioner</p>
+  </td>
+  <td width=89 valign=top style='width:66.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:13.55pt'>
+  <p class=MsoNormal>MKR</p>
+  </td>
+  <td width=349 valign=top style='width:261.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:13.55pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:13.55pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='height:13.55pt'>
+  <td width=169 valign=top style='width:126.85pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:13.55pt'>
+  <p class=MsoNormal>Administrationsinterface</p>
+  </td>
+  <td width=89 valign=top style='width:66.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:13.55pt'>
+  <p class=MsoNormal>MKR/JGN/hhl</p>
+  </td>
+  <td width=349 valign=top style='width:261.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:13.55pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:13.55pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='height:14.65pt'>
+  <td width=169 valign=top style='width:126.85pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:14.65pt'>
+  <p class=MsoNormal>Afgræsning af tilgang til tilmeldte institutioner</p>
+  </td>
+  <td width=89 valign=top style='width:66.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><span lang=EN-GB style='mso-ansi-language:EN-GB'>MKR<o:p></o:p></span></p>
+  </td>
+  <td width=349 valign=top style='width:261.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  lang=EN-GB style='mso-ansi-language:EN-GB'><o:p></o:p></span></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  lang=EN-GB style='mso-ansi-language:EN-GB'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='height:3.8pt'>
+  <td width=169 valign=top style='width:126.85pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:3.8pt'>
+  <p class=MsoHeader style='tab-stops:65.2pt'>Belastningstest</p>
+  </td>
+  <td width=89 valign=top style='width:66.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:3.8pt'>
+  <p class=MsoNormal>HHL/mkr</p>
+  </td>
+  <td width=349 valign=top style='width:261.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:3.8pt'>
+  <p class=MsoNormal>Udskydes til version 0.5</p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:3.8pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='height:3.8pt'>
+  <td width=169 valign=top style='width:126.85pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:3.8pt'>
+  <p class=MsoHeader style='tab-stops:65.2pt'>Årstal og materialetype</p>
+  </td>
+  <td width=89 valign=top style='width:66.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:3.8pt'>
+  <p class=MsoNormal>MKR/hhl</p>
+  </td>
+  <td width=349 valign=top style='width:261.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:3.8pt'>
+  <p class=MsoNormal>Ændring i XSD</p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:3.8pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='height:3.8pt'>
+  <td width=169 valign=top style='width:126.85pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:3.8pt'>
+  <p class=MsoHeader style='tab-stops:65.2pt'>Ratings ændres til %</p>
+  </td>
+  <td width=89 valign=top style='width:66.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:3.8pt'>
+  <p class=MsoNormal>MKR/hhl</p>
+  </td>
+  <td width=349 valign=top style='width:261.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:3.8pt'>
+  <p class=MsoNormal>Ændring i XSD</p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:3.8pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<table border=1 cellspacing=0 cellpadding=0 width=677 style='width:507.7pt;
+ border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0cm 3.5pt 0cm 3.5pt'>
+ <tr style='height:19.15pt'>
+  <td width=677 colspan=4 valign=top style='width:507.7pt;border:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:19.15pt'>
+  <h4>April 2010 Version 0.4</h4>
+  </td>
+ </tr>
+ <tr style='height:18.05pt'>
+  <td width=169 valign=top style='width:126.85pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:18.05pt'>
+  <h5>Navn</h5>
+  </td>
+  <td width=89 valign=top style='width:66.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:18.05pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;mso-bidi-font-size:16.0pt'>Ansvarlig<o:p></o:p></span></b></p>
+  </td>
+  <td width=349 valign=top style='width:261.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:18.05pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;mso-bidi-font-size:16.0pt'>Bemærkning<o:p></o:p></span></b></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:18.05pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;mso-bidi-font-size:16.0pt'>færdig<o:p></o:p></span></b></p>
+  </td>
+ </tr>
+ <tr style='height:13.55pt'>
+  <td width=169 valign=top style='width:126.85pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:13.55pt'>
+  <p class=MsoNormal><span lang=EN-GB style='mso-ansi-language:EN-GB'>Match<o:p></o:p></span></p>
+  </td>
+  <td width=89 valign=top style='width:66.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:13.55pt'>
+  <p class=MsoNormal><span lang=EN-GB style='mso-ansi-language:EN-GB'>MKR/hhl<o:p></o:p></span></p>
+  </td>
+  <td width=349 valign=top style='width:261.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:13.55pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  lang=EN-GB style='mso-ansi-language:EN-GB'><o:p></o:p></span></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:13.55pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  lang=EN-GB style='mso-ansi-language:EN-GB'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='height:14.65pt'>
+  <td width=169 valign=top style='width:126.85pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:14.65pt'>
+  <p class=MsoNormal>Visnings performance tuning</p>
+  </td>
+  <td width=89 valign=top style='width:66.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal>MKR</p>
+  </td>
+  <td width=349 valign=top style='width:261.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='height:14.65pt'>
+  <td width=169 valign=top style='width:126.85pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:14.65pt'>
+  <p class=MsoNormal>Søgning af poster performance tuning</p>
+  </td>
+  <td width=89 valign=top style='width:66.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal>HHL/mkr</p>
+  </td>
+  <td width=349 valign=top style='width:261.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='height:14.65pt'>
+  <td width=169 valign=top style='width:126.85pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:14.65pt'>
+  <p class=MsoHeader style='tab-stops:65.2pt'>Opsamling af statistik</p>
+  </td>
+  <td width=89 valign=top style='width:66.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal>HHL/MKR</p>
+  </td>
+  <td width=349 valign=top style='width:261.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='height:14.65pt'>
+  <td width=169 valign=top style='width:126.85pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:14.65pt'>
+  <p class=MsoHeader style='tab-stops:65.2pt'>Dubletter i tags</p>
+  </td>
+  <td width=89 valign=top style='width:66.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><span lang=EN-GB style='mso-ansi-language:EN-GB'>MKR<o:p></o:p></span></p>
+  </td>
+  <td width=349 valign=top style='width:261.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  lang=EN-GB style='mso-ansi-language:EN-GB'><o:p></o:p></span></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  lang=EN-GB style='mso-ansi-language:EN-GB'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='height:14.65pt'>
+  <td width=169 valign=top style='width:126.85pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:14.65pt'>
+  <p class=MsoHeader style='tab-stops:65.2pt'><span lang=EN-GB
+  style='mso-ansi-language:EN-GB'>Test<o:p></o:p></span></p>
+  </td>
+  <td width=89 valign=top style='width:66.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><span lang=EN-GB style='mso-ansi-language:EN-GB'>HHL<o:p></o:p></span></p>
+  </td>
+  <td width=349 valign=top style='width:261.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  lang=EN-GB style='mso-ansi-language:EN-GB'><o:p></o:p></span></p>
+  </td>
+  <td width=70 valign=top style='width:52.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.65pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  lang=EN-GB style='mso-ansi-language:EN-GB'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-GB style='mso-ansi-language:EN-GB'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=1 cellspacing=0 cellpadding=0 width=676 style='width:507.2pt;
+ border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0cm 3.5pt 0cm 3.5pt'>
+ <tr style='height:15.15pt'>
+  <td width=676 colspan=4 valign=top style='width:507.2pt;border:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:15.15pt'>
+  <h4>Maj 2010 Version 0.5</h4>
+  </td>
+ </tr>
+ <tr style='height:14.3pt'>
+  <td width=169 valign=top style='width:126.8pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:14.3pt'>
+  <h5>Navn</h5>
+  </td>
+  <td width=88 valign=top style='width:66.3pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.3pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;mso-bidi-font-size:16.0pt'>Ansvarlig<o:p></o:p></span></b></p>
+  </td>
+  <td width=349 valign=top style='width:261.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.3pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;mso-bidi-font-size:16.0pt'>Bemærkning<o:p></o:p></span></b></p>
+  </td>
+  <td width=70 valign=top style='width:52.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.3pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;mso-bidi-font-size:16.0pt'>færdig<o:p></o:p></span></b></p>
+  </td>
+ </tr>
+ <tr style='height:11.6pt'>
+  <td width=169 valign=top style='width:126.8pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:11.6pt'>
+  <p class=MsoNormal>Visning af statistik</p>
+  </td>
+  <td width=88 valign=top style='width:66.3pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:11.6pt'>
+  <p class=MsoNormal>MKR/HHL</p>
+  </td>
+  <td width=349 valign=top style='width:261.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:11.6pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=70 valign=top style='width:52.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:11.6pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='height:11.6pt'>
+  <td width=169 valign=top style='width:126.8pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:11.6pt'>
+  <h6><span lang=EN-GB>FetchUser <u><o:p></o:p></u></span></h6>
+  </td>
+  <td width=88 valign=top style='width:66.3pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:11.6pt'>
+  <p class=MsoNormal><span lang=EN-GB style='mso-ansi-language:EN-GB'>MKR/HHL<o:p></o:p></span></p>
+  </td>
+  <td width=349 valign=top style='width:261.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:11.6pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  lang=EN-GB style='mso-ansi-language:EN-GB'><o:p></o:p></span></p>
+  </td>
+  <td width=70 valign=top style='width:52.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:11.6pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  lang=EN-GB style='mso-ansi-language:EN-GB'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='height:23.15pt'>
+  <td width=169 valign=top style='width:126.8pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:23.15pt'>
+  <p class=MsoNormal>Modtagelse af eksterne data</p>
+  </td>
+  <td width=88 valign=top style='width:66.3pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:23.15pt'>
+  <p class=MsoNormal>MKR</p>
+  </td>
+  <td width=349 valign=top style='width:261.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:23.15pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=70 valign=top style='width:52.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:23.15pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='height:11.6pt'>
+  <td width=169 valign=top style='width:126.8pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;
+  height:11.6pt'>
+  <p class=MsoNormal>Belastningstest</p>
+  </td>
+  <td width=88 valign=top style='width:66.3pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:11.6pt'>
+  <p class=MsoNormal>HHL/mkr</p>
+  </td>
+  <td width=349 valign=top style='width:261.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:11.6pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width=70 valign=top style='width:52.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:11.6pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3><span lang=EN-GB style='mso-ansi-language:EN-GB'>Match<o:p></o:p></span></h3>
+
+<p class=MsoNormal>De poster som BSD er tilknyttet kan godt have forskelligt id
+fra de forskellige institutioner, f.eks. Faust og isbn, hvis data der knytter
+dem sammen er tilgængelig vil BSD serveren knytte dem sammen.<span
+style="mso-spacerun: yes">  </span>Her tænkes primært på DANBIB.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Delprojekter:</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l6 level1 lfo3;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Udtage data fra Danbib</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l6 level1 lfo3;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Opbygge interface/program til BSD-basen til at modtage
+data</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l6 level1 lfo3;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Beskrive hvordan data fra andre institutioner, der ikke
+er med i danbib, kan sendes/modtages til BSD for matchning.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Projektet er i en undersøgelsesfase, om der kan genbruges
+fra forsideprojektet.<span style="mso-spacerun: yes">  </span>Ovenstående er
+baseret på ”egenudvikling”</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>Moderator</h3>
+
+<p class=MsoNormal>Delprojekter:</p>
+
+<p class=MsoNormal style='margin-left:54.0pt;text-indent:-18.0pt;mso-list:l10 level1 lfo8;
+tab-stops:list 54.0pt'><![if !supportLists]>A.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>Metode der kan modtage klager, logge disse og udsende mails
+til den institution (moderator) der skal behandle klagen
+(reportOffensiveContent).</p>
+
+<p class=MsoNormal style='margin-left:54.0pt;text-indent:-18.0pt;mso-list:l10 level1 lfo8;
+tab-stops:list 54.0pt'><![if !supportLists]>B.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>Den udsende mail vil indeholde et link til
+administrationsinterface, hvor moderator kan slette, godkende etc.<span
+style="mso-spacerun: yes">  </span>Linket i mailen vil indeholde en nøgle, så
+”moderator” bliver logget direkte ind i admininstrationsdatabasen.</p>
+
+<p class=MsoNormal style='margin-left:54.0pt;text-indent:-18.0pt;mso-list:l10 level1 lfo8;
+tab-stops:list 54.0pt'><![if !supportLists]>C.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>Script der kan gennemgå basen for ”gamle” sager der ikke er
+blevet behandlet og gensende klagen til institutionen.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3><a name="_searchData"></a>searchData</h3>
+
+<p class=MsoNormal>Der skal kunne søges på flg. felter:</p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:blue;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>&lt;</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:maroon;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>xs:enumeration</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:red;background:white;
+mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:
+normal'> value</span><span lang=EN-GB style='font-size:10.0pt;font-family:Arial;
+color:blue;background:white;mso-highlight:white;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>=&quot;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>VOXB</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>&quot;/&gt;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:blue;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>&lt;</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:maroon;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>xs:enumeration</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:red;background:white;
+mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:
+normal'> value</span><span lang=EN-GB style='font-size:10.0pt;font-family:Arial;
+color:blue;background:white;mso-highlight:white;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>=&quot;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>LOCAL</span><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial;color:blue;background:white;mso-highlight:white;
+mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>&quot;/&gt;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:blue;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>&lt;</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:maroon;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>xs:enumeration</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:red;background:white;
+mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:
+normal'> value</span><span lang=EN-GB style='font-size:10.0pt;font-family:Arial;
+color:blue;background:white;mso-highlight:white;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>=&quot;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>EAN</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>&quot;/&gt;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:blue;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>&lt;</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:maroon;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>xs:enumeration</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:red;background:white;
+mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:
+normal'> value</span><span lang=EN-GB style='font-size:10.0pt;font-family:Arial;
+color:blue;background:white;mso-highlight:white;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>=&quot;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>ISBN</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>&quot;/&gt;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:blue;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>&lt;</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:maroon;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>xs:enumeration</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:red;background:white;
+mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:
+normal'> value</span><span lang=EN-GB style='font-size:10.0pt;font-family:Arial;
+color:blue;background:white;mso-highlight:white;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>=&quot;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>ISSN</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>&quot;/&gt;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:blue;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>&lt;</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:maroon;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>xs:enumeration</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:red;background:white;
+mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:
+normal'> value</span><span lang=EN-GB style='font-size:10.0pt;font-family:Arial;
+color:blue;background:white;mso-highlight:white;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>=&quot;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>TAG</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>&quot;/&gt;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:blue;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>&lt;</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:maroon;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>xs:enumeration</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:red;background:white;
+mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:
+normal'> value</span><span lang=EN-GB style='font-size:10.0pt;font-family:Arial;
+color:blue;background:white;mso-highlight:white;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>=&quot;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>TITLE</span><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial;color:blue;background:white;mso-highlight:white;
+mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>&quot;/&gt;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:blue;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>&lt;</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:maroon;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>xs:enumeration</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:red;background:white;
+mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:
+normal'> value</span><span lang=EN-GB style='font-size:10.0pt;font-family:Arial;
+color:blue;background:white;mso-highlight:white;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>=&quot;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>CONTRIBUTOR</span><span lang=EN-GB
+style='font-size:10.0pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:
+normal'>&quot;/&gt;</span><span lang=EN-GB style='font-size:10.0pt;font-family:
+Arial;color:black;background:white;mso-highlight:white;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:blue;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>&lt;</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:maroon;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>xs:enumeration</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:red;background:white;
+mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:
+normal'> value</span><span lang=EN-GB style='font-size:10.0pt;font-family:Arial;
+color:blue;background:white;mso-highlight:white;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>=&quot;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>TIMESTAMPMIN</span><span lang=EN-GB
+style='font-size:10.0pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:
+normal'>&quot;/&gt;</span><span lang=EN-GB style='font-size:10.0pt;font-family:
+Arial;color:black;background:white;mso-highlight:white;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:blue;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>&lt;</span><span lang=EN-GB style='font-size:10.0pt;
+font-family:Arial;color:maroon;background:white;mso-highlight:white;mso-font-kerning:
+0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>xs:enumeration</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:red;background:white;
+mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:
+normal'> value</span><span lang=EN-GB style='font-size:10.0pt;font-family:Arial;
+color:blue;background:white;mso-highlight:white;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'>=&quot;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;
+mso-bidi-font-weight:normal'>TIMESTAMPMAX</span><span lang=EN-GB
+style='font-size:10.0pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB;mso-bidi-font-weight:
+normal'>&quot;/&gt;</span><span lang=EN-GB style='font-size:10.0pt;font-family:
+Arial;color:black;background:white;mso-highlight:white;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB;mso-bidi-font-weight:normal'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-GB style='color:blue;background:white;
+mso-highlight:white;mso-font-kerning:0pt;mso-ansi-language:EN-GB'>&lt;</span><span
+lang=EN-GB style='background:white;mso-highlight:white;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB'>xs:enumeration<span style='color:red'> value</span><span
+style='color:blue'>=&quot;</span><span style='color:black'>LOGONSYSTEM</span><span
+style='color:blue'>&quot;/&gt;</span></span><span lang=EN-GB style='color:blue;
+mso-font-kerning:0pt;mso-ansi-language:EN-GB'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-GB style='color:blue;mso-font-kerning:0pt;
+mso-ansi-language:EN-GB'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-font-kerning:0pt'>Disse skal kunne søges
+med boolske operatorer.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-font-kerning:0pt'>Delprojekter:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l5 level1 lfo10;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-font-kerning:0pt'>A.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
+style='mso-font-kerning:0pt'>Søgning på et enkelt felt<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l5 level1 lfo10;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-font-kerning:0pt'>B.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
+style='mso-font-kerning:0pt'>Søgning med boolske operatorer<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-font-kerning:0pt'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-font-kerning:0pt'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h3><a name="_updateUser_og_deleteUser"></a>updateUser og deleteUser</h3>
+
+<p class=MsoNormal>Delprojekter</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l4 level1 lfo12;
+tab-stops:list 36.0pt'><![if !supportLists]>A.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>De skal defineres og implementeres.<span style="mso-spacerun:
+yes">  </span>deleteUser vil være en status brugeren får.<span
+style="mso-spacerun: yes">  </span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l4 level1 lfo12;
+tab-stops:list 36.0pt'><![if !supportLists]>B.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>”unDelete”<span style="mso-spacerun: yes">  </span>for at få
+brugeren aktiv igen. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3><a name="_updateMydata_og_deleteMydata"></a>updateMydata og deleteMydata</h3>
+
+<p class=MsoNormal>Delprojekter</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l3 level1 lfo13;
+tab-stops:list 36.0pt'><![if !supportLists]>A.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>De skal defineres og implementeres. deleteMyData vil være en
+status data får. </p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l3 level1 lfo13;
+tab-stops:list 36.0pt'><![if !supportLists]>B.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>”unDelete” på MyData.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3><a name="_Index_performance_tuning"></a>Index performance tuning</h3>
+
+<p class=MsoNormal>Delprojekter</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l9 level1 lfo6;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Oprettelse af de ”rigtige” index etc. i Oracle
+databasen</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>Visnings performance tuning</h3>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l9 level1 lfo6;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Fremhentning af data til visning (samling af mange
+enheder i databasen) skal evt. optimeres så der allerede ligger ”færdige”
+poster klar til visning. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>Søgning perfomance tuning</h3>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l9 level1 lfo6;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>searchData skal optimeres så en forespørgsel på om der
+eksistere data tilknyttet disse poster kommer til at gå ”rasende” stærkt.<span
+style="mso-spacerun: yes">  </span>Mål: søgning på 10 id-numre skal være minde
+end 0,5 sekund (set fra server-siden). </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>Admininstration af BSD (databasen)</h3>
+
+<p class=MsoNormal>Det er blevet besluttet at udvide VIP interfacet til også at
+omfatte BSD. Bemærk: institutioner der ellers ikke er kendt af DBC skal også
+kunne oprettes kun med det formål at få en BSD profil.</p>
+
+<p class=MsoNormal>Delprojekter</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l9 level1 lfo6;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>En institution skal kunne vedligeholde flg. data: </p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l9 level2 lfo6;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='font-family:"Courier New";
+mso-bidi-font-family:Arial'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Ip-adresse</p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l9 level2 lfo6;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='font-family:"Courier New";
+mso-bidi-font-family:Arial'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Moderator kontaktperson</p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l9 level2 lfo6;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='font-family:"Courier New";
+mso-bidi-font-family:Arial'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Moderator e-mail adresse(r)</p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l9 level2 lfo6;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='font-family:"Courier New";
+mso-bidi-font-family:Arial'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>”identityProvider”</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l9 level1 lfo6;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Kunne se hvilke ”OffensiveContent” anmeldelser der
+ligger til institutionen og agere på dem. Disse vil ske direkte til databasen
+med ”oci” kald.</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l9 level1 lfo6;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Kunne se statistik vedr. brugen af BSD.</p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l9 level2 lfo6;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='font-family:"Courier New";
+mso-bidi-font-family:Arial'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>For institutionen selv </p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l9 level2 lfo6;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='font-family:"Courier New";
+mso-bidi-font-family:Arial'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>For hele BSD basen</p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l9 level2 lfo6;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='font-family:"Courier New";
+mso-bidi-font-family:Arial'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Eller/og downloade data i EXCEL</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3><a name="_Afgrænse_web-sitet"></a>Afgrænse web-sitet</h3>
+
+<p class=MsoNormal>Kun https protokollen skal kunne benyttes.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3><a name="_Kryptering"></a>Kryptering</h3>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l7 level1 lfo7;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>&lt;userIdentifierValue&gt; skal krypteres inden
+lagring i databasen.<span style="mso-spacerun: yes">  </span>Krypteringen vil
+ske med allerede udviklet FET værktøjer.</p>
+
+<p class=MsoNormal>Krypteringen er blevet implementeret med ”md5” med en ”salt”
+værdi.<span style="mso-spacerun: yes">  </span>Salt-værdien har vi sat til 256
+bytes.<span style="mso-spacerun: yes">  </span>Metoden er godkendt af
+datatilsynet i forbindelse med bibliotek.dk projektet med brugerskabte data.</p>
+
+<p class=MsoNormal>Nøglen vil ikke være tilgængelig på nettet.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>Afgrænsning på ip-adresse</h3>
+
+<p class=MsoNormal>Hænger stærkt sammen med Administrations modulet til
+databasen. Kun tilmeldte institutioner må benytte denne service.<span
+style="mso-spacerun: yes">  </span>Ip-adresse og Institutionsnavn skal være
+sammenhørende.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>Opsamling af statistik</h3>
+
+<p class=MsoNormal>Foruden de ting man direkte kan ”læse” ud af databasen,
+f.eks. hvor mange poster har tilknyttet BSD, skal man også kunne se ”løbende
+forbrug”.<span style="mso-spacerun: yes">  </span>Hvor mange forespørgsler, og
+hvor stor en hit-procent.</p>
+
+<p class=MsoNormal>Dette kræver en logning af forespørgsler og svar.<span
+style="mso-spacerun: yes">  </span>En evt. ”komprimering” af disse kan også
+blive aktuel.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>Visning af statistik</h3>
+
+<p class=MsoNormal>Som en del af administrationsgrænsefladen skal man kunne se
+den statiske og opsamlede statistik.<span style="mso-spacerun: yes"> 
+</span>Projektet kan evt. koordineres med et projekt Gentofte bibliotekerne er
+i gang med, så resultatet kan ses på DanmarksBibilioteksindex. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>Belastningstest</h3>
+
+<p class=MsoNormal>Denne funktion kan udføres løbende efterhånden som
+funktioner bliver implementeret i BSD.<span style="mso-spacerun: yes"> 
+</span>En nærmere analyse er påkrævet for at finde den rette måde at belaste og
+måle resultatet.</p>
+
+<p class=MsoNormal>Under styregruppemødet den 11.2.2010 blev det foreslået at
+bruge data fra forsideprojektet til at estimere belastningen.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>Dubletter i tags</h3>
+
+<p class=MsoNormal>Tags skal ikke alene afleveres i hvert ”item”, men der skal
+også være en opsummering af Tags på objekt niveau.<span style="mso-spacerun:
+yes">  </span>Her skal de ”normaliseres” og dubletter fjernes.<span
+style="mso-spacerun: yes">  </span>En normalisering kunne være at lave alle
+tags til ”lowercase”.<span style="mso-spacerun: yes">  </span>Problemer som AA
+== Å vil kun blive adresseret hvis det viser sig nødvendigt i drift
+situationen. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>Test</h3>
+
+<p class=MsoNormal>Testning af serverdelen.<span style="mso-spacerun: yes"> 
+</span>Skal udbygges. <span style='color:blue'><o:p></o:p></span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>Årstal og materialetype</h3>
+
+<p class=MsoNormal>Både årstal og materiale skal oplyses ved oprettelse af et
+objekt.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3><a name="_Versionering_af_udviklingsplatform"></a>Versionering af
+udviklingsplatform</h3>
+
+<p class=MsoNormal>Fra 1. marts vil next.voxb.addi.dk være versioneret.<span
+style="mso-spacerun: yes">  </span>Versioneringen vil afspejle sig i URL’en.<span
+style="mso-spacerun: yes">  </span>Hver version vil få sit eget directory.<span
+style="mso-spacerun: yes">   </span>Således vil tilgangen pr. 1. marts blive:</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>                      </span><a
+href="https://voxb.addi.dk/0.1">https://voxb.addi.dk/0.1</a><span
+style="mso-spacerun: yes">    </span></p>
+
+<p class=MsoNormal>og</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>                      </span><a
+href="https://voxb.addi.dk/0.2">https://voxb.addi.dk/0.2</a></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>next.voxb.addi.dk forsvinder da ovennævnte versionering
+giver samme mulighed.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>Rating ændres til procentafregning</h3>
+
+<p class=MsoNormal>Den nuværende skala, 0 – 5, ændres til procentvis 0 –
+100.<span style="mso-spacerun: yes">  </span>Dette vil også give ændringer<span
+style="mso-spacerun: yes">  </span>i xsd om hvordan fordelingen er af de
+afgivne ”stemmer”.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>Modtagelse af eksterne data</h3>
+
+<p class=MsoNormal>Første projekt bliver at overføres brugerskabte data fra
+bibliotek.dk til BSD.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>fetchUser</h3>
+
+<p class=MsoNormal>fetchUser skal udbygges så den indirekte også bliver en
+søgning på andre ”persona” i voxb, som er den samme som fetchUser fingerprint
+angiver.<span style="mso-spacerun: yes">  </span><span lang=EN-GB
+style='mso-ansi-language:EN-GB'>CPR == CPR,<span style="mso-spacerun: yes"> 
+</span>(Value == Value &amp; Provider == Provider)<o:p></o:p></span></p>
+
+<p class=MsoNormal>Response af fetchUser skal også afspejle at der kan
+returneres mere end 1 persona.</p>
+
+</div>
+
+</body>
+
+</html>

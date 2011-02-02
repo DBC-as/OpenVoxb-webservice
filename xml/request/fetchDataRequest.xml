@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:voxb="http://oss.dbc.dk/ns/voxb">
+   <soapenv:Body>
+      <voxb:fetchDataRequest>
+         <!--1 or more repetitions:-->
+         <voxb:fetchData>
+            <voxb:voxbIdentifier>16</voxb:voxbIdentifier>
+         </voxb:fetchData>
+         <voxb:output>
+            <!--1 or more repetitions:-->
+            <voxb:contentType>all</voxb:contentType>
+         </voxb:output>
+      </voxb:fetchDataRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

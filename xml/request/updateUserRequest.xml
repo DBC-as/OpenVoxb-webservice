@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:voxb="http://oss.dbc.dk/ns/voxb">
+   <soapenv:Body>
+      <voxb:updateUserRequest>
+         <voxb:userId>31</voxb:userId>
+         <voxb:userAlias>
+            <voxb:aliasName>AndersVestergaard</voxb:aliasName>
+         </voxb:userAlias>
+         <voxb:authenticationFingerprint>
+            <voxb:userIdentifierValue>1234</voxb:userIdentifierValue>
+            <voxb:userIdentifierType>local</voxb:userIdentifierType>
+            <voxb:identityProvider>Testbibliotek</voxb:identityProvider>
+            <voxb:institutionName>Testbibliotek</voxb:institutionName>
+         </voxb:authenticationFingerprint>
+      </voxb:updateUserRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

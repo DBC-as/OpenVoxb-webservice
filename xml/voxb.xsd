@@ -1,0 +1,825 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 (http://www.altova.com) by Dansk Bibliotekscenter A/S (Dansk Bibliotekscenter A/S) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:voxb="http://oss.dbc.dk/ns/voxb" targetNamespace="http://oss.dbc.dk/ns/voxb" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">XML schema for VoxB previous known as BSD</xs:documentation>
+	</xs:annotation>
+	<xs:element name="createUserRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:userAlias"/>
+				<xs:element ref="voxb:authenticationFingerprint"/>
+				<xs:element ref="voxb:callback" minOccurs="0"/>
+				<xs:element ref="voxb:outputType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="createUserResponse">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">If on return userAlias, its OK, if userAliasSuggestion then the userAlias is already taken - otherwise it is an error.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:userAliasSuggestion"/>
+				<xs:element ref="voxb:error"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="updateUserRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:userAlias"/>
+				<xs:element ref="voxb:authenticationFingerprint"/>
+				<xs:element ref="voxb:callback" minOccurs="0"/>
+				<xs:element ref="voxb:outputType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="updateUserResponse">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:error"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="deleteUserRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Only the link between this fingerprint and Alias is deleted.  If no more links to the Alias, the Alias is deleted as well.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:callback" minOccurs="0"/>
+				<xs:element ref="voxb:outputType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="deleteUserResponse">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:error"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="undeleteUserRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:callback" minOccurs="0"/>
+				<xs:element ref="voxb:outputType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="undeleteUserResponse">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:error"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="fetchUserRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="voxb:userId"/>
+					<xs:element ref="voxb:userAlias">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Not yet implemented in fetchUserRequest</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="voxb:authenticationFingerprint"/>
+				</xs:choice>
+				<xs:element ref="voxb:callback" minOccurs="0"/>
+				<xs:element ref="voxb:outputType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="fetchUserResponse">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="voxb:users" maxOccurs="unbounded"/>
+				<xs:element ref="voxb:error"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="createMyDataRequest">
+		<xs:annotation>
+			<xs:documentation>the request used for creating new voxB-data. local and tags are repeatable, rating and review are not. If the rated/reviewed/tagged object is not part of the voxB database (identified by objectIdentifierValue/Type), it will be created.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:item"/>
+				<xs:element ref="voxb:object"/>
+				<xs:element ref="voxb:callback" minOccurs="0"/>
+				<xs:element ref="voxb:outputType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="createMyDataResponse">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="voxb:voxbIdentifier"/>
+				<xs:element ref="voxb:error"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="updateMyDataRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Will over write earlier entries of the given type on the item</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:voxbIdentifier"/>
+				<xs:element ref="voxb:item"/>
+				<xs:element ref="voxb:object" minOccurs="0"/>
+				<xs:element ref="voxb:callback" minOccurs="0"/>
+				<xs:element ref="voxb:outputType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="updateMyDataResponse">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="voxb:voxbIdentifier"/>
+				<xs:element ref="voxb:error"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="deleteMyDataRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:voxbIdentifier"/>
+				<xs:element ref="voxb:item" minOccurs="0"/>
+				<xs:element ref="voxb:object" minOccurs="0"/>
+				<xs:element ref="voxb:callback" minOccurs="0"/>
+				<xs:element ref="voxb:outputType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="deleteMyDataResponse">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="voxb:voxbIdentifier"/>
+				<xs:element ref="voxb:error"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="undeleteMyDataRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:voxbIdentifier"/>
+				<xs:element ref="voxb:callback" minOccurs="0"/>
+				<xs:element ref="voxb:outputType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="undeleteMyDataResponse">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="voxb:voxbIdentifier"/>
+				<xs:element ref="voxb:error"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="fetchMyDataRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:callback" minOccurs="0"/>
+				<xs:element ref="voxb:outputType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="fetchMyDataResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:userId"/>
+				<xs:choice>
+					<xs:element ref="voxb:result" maxOccurs="unbounded"/>
+					<xs:element ref="voxb:error"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="fetchDataRequest">
+		<xs:annotation>
+			<xs:documentation>retrieve user created data about one or more objects, using either an object identifier (faust, isbn, ean etc.) or a specific voxB item identifier.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:fetchData" maxOccurs="unbounded"/>
+				<xs:element ref="voxb:output"/>
+				<xs:element ref="voxb:callback" minOccurs="0"/>
+				<xs:element ref="voxb:outputType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="fetchDataResponse">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="voxb:totalItemData" maxOccurs="unbounded"/>
+				<xs:element ref="voxb:error"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="searchDataRequest">
+		<xs:annotation>
+			<xs:documentation>Only limited search functionality implemented yet.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:searchString"/>
+				<xs:element ref="voxb:qualifier"/>
+				<xs:element ref="voxb:truncate" minOccurs="0"/>
+				<xs:element ref="voxb:moreSearch" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="voxb:callback" minOccurs="0"/>
+				<xs:element ref="voxb:outputType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="searchDataResponse">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="voxb:itemList"/>
+				<xs:element ref="voxb:error"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="reportOffensiveContentRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">NB!: Not implemented yet. userId is the reporting user. voxbIdentifier is the identifier of the item which contains the offending content</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:voxbIdentifier"/>
+				<xs:element ref="voxb:callback" minOccurs="0"/>
+				<xs:element ref="voxb:outputType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="reportOffensiveContentResponse">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Return userId is the id of the reporting user.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:error"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="aliasName" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The name the user want to be represented by, when showing the "item" to other users.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="authenticationFingerprint">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:userIdentifierValue"/>
+				<xs:element ref="voxb:userIdentifierType"/>
+				<xs:element ref="voxb:identityProvider"/>
+				<xs:element ref="voxb:institutionName"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="averageRating" type="xs:float">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The average rating for this object.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="booleanOperator" type="voxb:booleanOperatorType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">There are only 3 boolean operators. AND, OR and NOT.  They will be interpreted in the order of the sub-elements of the search element. Default: AND</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="callback" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">If outputType=json.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="contentType" type="voxb:contentTypeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Which output do you want: review, tags, summaryTags, rating, totalRatings or local?</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="error" type="voxb:errorType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">return info when an error occurs. The enumerations mentioned is only drafts.  The list of errorCode's will be completed when the service is released.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="fetchData">
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element ref="voxb:objectIdentifierValue"/>
+					<xs:element ref="voxb:objectIdentifierType"/>
+				</xs:sequence>
+				<xs:element ref="voxb:voxbIdentifier"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="identityProvider" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The name of the authentication provider. On the same institution you can have more than one way to log on to the system. To make sure to identify the user correct	both  IdentityProvider, UserIdentifier and userIdentifierType will be the same.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="institutionName" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The name of the institution where the user is logged on.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="item">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The actual data the user had put into the system.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:rating" minOccurs="0"/>
+				<xs:element ref="voxb:tags" minOccurs="0"/>
+				<xs:element ref="voxb:review" minOccurs="0"/>
+				<xs:element ref="voxb:local" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="itemList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:voxbIdentifier" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="local">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:localData"/>
+				<xs:element ref="voxb:localType"/>
+				<xs:element ref="voxb:localItemType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="localData" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Local data. The data will be UTF-8 encoded.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="localItemType" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Here the local site can state what kind of data localData is. e.g. "Quotation", "Plus-text", "Minus-text", "Emotion" ...</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="localType" type="voxb:localTypeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Data can be of the types TXT or HTML.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="moreSearch">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:booleanOperator"/>
+				<xs:element ref="voxb:searchString"/>
+				<xs:element ref="voxb:qualifier"/>
+				<xs:element ref="voxb:truncate" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="numberOfRaters" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The number of users who had made the current rating.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="object">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">the objectIdentifier is the identifier of the object reviewed, tagged or rated by the current item. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:objectContributors" minOccurs="0"/>
+				<xs:element ref="voxb:objectIdentifierValue"/>
+				<xs:element ref="voxb:objectIdentifierType"/>
+				<xs:element ref="voxb:objectMaterialType" minOccurs="0"/>
+				<xs:element ref="voxb:objectPublicationYear" minOccurs="0"/>
+				<xs:element ref="voxb:objectTitle" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="objectContributors" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Contributor:Writer, Editor, Illustrator etc. If more than one contributor they should be separated by ";"</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="objectIdentifierType" type="voxb:objectIdentifierTypeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">if objectIdentifierType == 'LOCAL' it's assumed that the objectIdentifier is concatenated by the local id-number of the library-database + the library-number.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="objectIdentifierValue">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">ISBN, ISSN and FAUST is without spaces and hyphens. </xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="64"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="objectMaterialType" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Material type of the object</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="objectPublicationYear" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Year of publication of the object</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="objectTitle">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The title of the object.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="256"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="output">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specification of the output expected in the fetchResponse call.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:contentType" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Which output do you want: review, tags, summaryTags, rating, totalRatings or local?</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="voxb:outputForm" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="outputForm" type="voxb:outputFormType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">edition: the data from the edition is retrieved. work: the data from the hole work is retrieved.
+										Only edition will be possible in the first version of VoxB.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="outputType" type="voxb:outputTypeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">E.g. xml, json or php. If not present outputType is soap.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="profileLink" type="xs:anyURI">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The URL to profile information about the user.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="qualifier" type="voxb:qualifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The type of search string in question.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="rating">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A rating is an integer between 0 and 100. If 0 or empty means no rating. From 1 to 100 is the actual rating</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:integer">
+				<xs:minInclusive value="0"/>
+				<xs:maxInclusive value="100"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ratingSummary">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:rating"/>
+				<xs:element ref="voxb:numberOfRaters"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="result">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:voxbIdentifier"/>
+				<xs:element ref="voxb:timestamp"/>
+				<xs:element ref="voxb:item"/>
+				<xs:element ref="voxb:object"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="review">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:reviewTitle" minOccurs="0"/>
+				<xs:element ref="voxb:reviewData"/>
+				<xs:element ref="voxb:reviewType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="reviewData" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The review the user had generated. The data will be UTF-8 encoded.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="reviewTitle">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The title of the review</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="64"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="reviewType" type="voxb:reviewTypeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">In this version review data can only be of the type "TXT". 
+				Is it the intention that it later on will be extended to HTML as well.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="searchString" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The string is in UTF-8 encoding. When used for search it will be converted to all lowercase characters.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="summaryTags">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Summary of each tag and number of time it has been assigned</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:tag"/>
+				<xs:element ref="voxb:tagCount"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="tag">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">tag can only be in txt format. Maxlength = 32</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="32"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="tagCount" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Number of times a given tag has been assigned</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="tags">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:tag" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="timestamp" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The timestamp from the VOXB database.  In RFC-3339 (ex. 2009-09-09T09:09:09+00:01)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="totalItemData">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:fetchData"/>
+				<xs:element ref="voxb:summaryTags" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="voxb:totalRatings" minOccurs="0"/>
+				<xs:element ref="voxb:userItems" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="voxb:object" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="totalNumberOfRaters" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The total numbers of ratings this object has.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="totalRatings">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:averageRating"/>
+				<xs:element ref="voxb:totalNumberOfRaters"/>
+				<xs:element ref="voxb:ratingSummary" maxOccurs="101"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="truncate" type="voxb:truncateType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Whether the searchText is a truncated text.  NONE or the absense of this element means none truncation.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="userAlias">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">userAlias will be unique in VOXB.  In some rare cases 2 users can have the same userAlias. Please see "Brugerbegrebet i BSD" for more information.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:aliasName"/>
+				<xs:element ref="voxb:profileLink" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="userAliasSuggestion" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The aliasName that the system suggesting in case the userAlias is already taken.  The userAliasSuggestion is available, no other user has taken this alias, at the time the response is given.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="userId" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The internal identification number for a user in the BSD database.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="userIdentifierValue">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Normally the borrower-code at the library (LogonSystem). </xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="32"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="userIdentifierType" type="voxb:userIdentifierTypeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">CPR or local. This can be used when matching logins from different identityProviders.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="userItems">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:userAlias"/>
+				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:voxbIdentifier"/>
+				<xs:element ref="voxb:rating" minOccurs="0"/>
+				<xs:element ref="voxb:tags" minOccurs="0"/>
+				<xs:element ref="voxb:review" minOccurs="0"/>
+				<xs:element ref="voxb:local" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="voxb:timestamp"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="userProfile">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:userAlias"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="users">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:userAlias"/>
+				<xs:element ref="voxb:authenticationFingerprint"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="voxbIdentifier" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VOXB database unique number for a voxb item.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:simpleType name="booleanOperatorType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AND"/>
+			<xs:enumeration value="OR"/>
+			<xs:enumeration value="NOT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="contentTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="review"/>
+			<xs:enumeration value="tags"/>
+			<xs:enumeration value="summaryTags"/>
+			<xs:enumeration value="rating"/>
+			<xs:enumeration value="totalRatings"/>
+			<xs:enumeration value="local"/>
+			<xs:enumeration value="object"/>
+			<xs:enumeration value="all"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="errorType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="alias_already_taken"/>
+			<xs:enumeration value="authentication_error"/>
+			<xs:enumeration value="contentTypes missing."/>
+			<xs:enumeration value="Could not create data, userID did not exist."/>
+			<xs:enumeration value="Could not find object. Orphaned items should be deleted."/>
+			<xs:enumeration value="Could not locate user with given fingerprint"/>
+			<xs:enumeration value="Empty qualifier."/>
+			<xs:enumeration value="Empty searchstring."/>
+			<xs:enumeration value="Fingerprint not valid"/>
+			<xs:enumeration value="Found no item from given voxbIdentifier"/>
+			<xs:enumeration value="Invalid voxbIdentifier"/>
+			<xs:enumeration value="Item already exists."/>
+			<xs:enumeration value="item could not be deleted due to database error."/>
+			<xs:enumeration value="Item could not be undeleted due to database error."/>
+			<xs:enumeration value="Item does not exist."/>
+			<xs:enumeration value="LOCAL_id_not_found"/>
+			<xs:enumeration value="No objects found having given id."/>
+			<xs:enumeration value="No data found for user"/>
+			<xs:enumeration value="No user found with given id."/>
+			<xs:enumeration value="No user with given userId found"/>
+			<xs:enumeration value="No items found."/>
+			<xs:enumeration value="No fields to update"/>
+			<xs:enumeration value="No item with given voxbIdentifier"/>
+			<xs:enumeration value="Missing userId"/>
+			<xs:enumeration value="Missing voxbIdentifier"/>
+			<xs:enumeration value="Unknown error in database insertion."/>
+			<xs:enumeration value="Unknown error in updating."/>
+			<xs:enumeration value="Unknown qualifier."/>
+			<xs:enumeration value="unknown_voxbIdentifier"/>
+			<xs:enumeration value="User could not be deleted due to database error."/>
+			<xs:enumeration value="userID invalid. Must be an integer."/>
+			<xs:enumeration value="voxbIdentifier invalid. Must be an integer."/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="localTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TXT"/>
+			<xs:enumeration value="HTML"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="objectIdentifierTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EAN"/>
+			<xs:enumeration value="ISSN"/>
+			<xs:enumeration value="ISBN"/>
+			<xs:enumeration value="FAUST"/>
+			<xs:enumeration value="LOCAL"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="outputFormType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="edition"/>
+			<xs:enumeration value="work"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="outputTypeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The types of output that can be returned by the service.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="xml"/>
+			<xs:enumeration value="json"/>
+			<xs:enumeration value="php"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="qualifierType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VOXB"/>
+			<xs:enumeration value="LOCAL"/>
+			<xs:enumeration value="EAN"/>
+			<xs:enumeration value="ISBN"/>
+			<xs:enumeration value="ISSN"/>
+			<xs:enumeration value="TAG"/>
+			<xs:enumeration value="TITLE">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Default truncation is both right and left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CONTRIBUTOR">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Default truncation is both right and left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TIMESTAMPMIN"/>
+			<xs:enumeration value="TIMESTAMPMAX"/>
+			<xs:enumeration value="USERID"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="reviewTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TXT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="truncateType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RIGHT"/>
+			<xs:enumeration value="LEFT"/>
+			<xs:enumeration value="BOTH"/>
+			<xs:enumeration value="NONE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="userIdentifierTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CPR"/>
+			<xs:enumeration value="local"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

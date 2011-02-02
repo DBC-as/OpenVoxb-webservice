@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:voxb="http://oss.dbc.dk/ns/voxb">
+   <soapenv:Body>
+      <voxb:createMyDataRequest>
+         <voxb:userId>29</voxb:userId>
+         <voxb:item>
+            <!--Optional:-->
+            <voxb:rating>66</voxb:rating>
+            <!--Optional:-->
+            <voxb:tags>
+               <!--1 or more repetitions:-->
+               <voxb:tag>tag1</voxb:tag>
+	       <voxb:tag>tag2</voxb:tag>	
+            </voxb:tags>
+            <!--Optional:-->
+            <voxb:review>
+               <!--Optional:-->
+               <voxb:reviewTitle>Review 1</voxb:reviewTitle>
+               <voxb:reviewData>Blah...</voxb:reviewData>
+               <voxb:reviewType>TXT</voxb:reviewType>
+            </voxb:review>
+            <!--Zero or more repetitions:-->
+            <voxb:local>
+               <voxb:localData>"Blah, blah..."</voxb:localData>
+               <voxb:localType>TXT</voxb:localType>
+               <voxb:localItemType>Quotation</voxb:localItemType>
+            </voxb:local>
+	    <voxb:local>
+               <voxb:localData>"Mere blah..."</voxb:localData>
+               <voxb:localType>TXT</voxb:localType>
+               <voxb:localItemType>Comment</voxb:localItemType>
+            </voxb:local>
+         </voxb:item>
+         <voxb:object>
+            <!--Optional:-->
+            <voxb:objectContributors>Marc Lesser</voxb:objectContributors>
+            <voxb:objectIdentifierValue>9781577316176</voxb:objectIdentifierValue>
+            <voxb:objectIdentifierType>ISBN</voxb:objectIdentifierType>
+            <!--Optional:-->
+            <voxb:objectMaterialType>Bog</voxb:objectMaterialType>
+            <!--Optional:-->
+            <voxb:objectPublicationYear>2009</voxb:objectPublicationYear>
+            <!--Optional:-->
+            <voxb:objectTitle>Less</voxb:objectTitle>
+         </voxb:object>
+      </voxb:createMyDataRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

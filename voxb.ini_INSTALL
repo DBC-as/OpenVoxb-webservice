@@ -1,0 +1,118 @@
+; Inifile for voxb
+
+[setup]
+; version
+version = 0.5
+
+xmldir = ./xml
+
+ocilogon = some_user/some_pwd@some.server.dbc.dk
+
+; Salt key - do not change this value - this is a secret key - do not make public
+salt = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+; wsdl for service
+wsdl = xml/voxb.wsdl
+
+; in_house_domain may use ?ShowInfo and use create_sample form
+in_house_domain = .dbc.dk
+
+; set to TRUE to expose the create_sample form
+show_samples = TRUE
+
+; validate
+;validate[soap_request] = xml/soap.xsd ; validerer soap envelopen
+;validate[soap_response] = xml/soap.xsd
+;validate[request] = xml/voxb.xsd
+;validate[response] = xml/voxb.xsd
+
+; soapActions and their corresponding request structure
+; Can be found in the wsdl but is stated here for convenience
+soapAction[createMyData] = createMyDataRequest
+soapAction[createUser]   = createUserRequest
+soapAction[deleteMyData] = deleteMyDataRequest
+soapAction[deleteUser]   = deleteUserRequest
+soapAction[undeleteMyData] = undeleteMyDataRequest
+soapAction[undeleteUser]   = undeleteUserRequest
+soapAction[fetchData]    = fetchDataRequest
+soapAction[fetchMyData]  = fetchMyDataRequest
+soapAction[fetchUser]    = fetchUserRequest
+soapAction[reportOffensiveContent] = reportOffensiveContentRequest
+soapAction[searchData]   = searchDataRequest
+soapAction[updateMyData] = updateMyDataRequest
+soapAction[updateUser]   = updateUserRequest
+
+; prefixes and namespaces
+; Namespace NONE = default name space
+xmlns[] = "http://oss.dbc.dk/ns/voxb
+xmlns[voxb] = http://oss.dbc.dk/ns/voxb
+xmlns[xsi] = http://www.w3.org/2001/XMLSchema-instance
+
+; logfile for verbose output
+logfile = voxb.log
+
+; default output format
+; output_format=xml
+
+; set verboselevel
+;   WARNING - simple warnings
+;   ERROR   - errors in response
+;   FATAL   - major errors
+;   STAT    - Statístical logging
+;   TIMER   - timer logging
+;   TRACE   - program trace
+;   DEBUG   - debugging info
+;   Z3959   - calls to z3950 services
+;   OCI     - oracle
+verbose = WARNING+ERROR+FATAL+STAT+TIMER+TRACE+DEBUG+Z3950+OCI
+
+; format for automatic timer dump %s is the soap-action used
+dump_timer = voxb(%s)
+
+
+[aaa]
+; aaa Authentication, Access control and Accounting
+; if aaa_credentials is set, the rights-object is created from
+; the FORS-server or aaa_ip_rights below
+;
+; oci credentials for FORS server
+aaa_credentials = some_user/some_pwd@some.server.dbc.dk
+; memcache server - use localhost in one-webserver environment
+;aaa_cache_address = localhost:11211
+; number of seconds to cache authentication and access rights info
+;aaa_cache_seconds = 3600
+;
+; As an alternative to FORS rights, rights can be set here for selected ip-addresses
+; aaa_ip_rights[group-identifier][ip_list] = list of ip's
+; aaa_ip_rights[group-identifier][ressource][<named ressource>] = right to <named ressource>
+; aaa_ip_rights[group-identifier][ressource][<named ressource 2>] = right to <named ressource 2>
+;
+;aaa_ip_rights[dbc][ip_list] = 172.16.0.0-172.31.255.255;193.111.162.0-193.111.162.255
+;aaa_ip_rights[dbc][ressource][voxb] = 500
+
+
+[rest]
+;
+; use xml.path.to.par notation to solve name-conflicts
+; action[thisSoapAction][foo][] = some.number
+; action[thisSoapAction][bar][] = another.number
+; to build
+; <thisSoapAction>
+;   <foo>
+;     <number>nn</number>
+;   </foo>
+;   <bar>
+;     <number>mm</number>
+;   </bar>
+; </thisSoapAction>
+; from url: action=thisSoapAction&some.number=nn&another.number=mm
+;
+; action[ALL] defines parameter used in all defined soap-actions
+;
+action[ALL][] = outputType
+action[ALL][] = callback
+
+action[deleteUser][] = userId
+
+[HowRU]
+__HOWRU__

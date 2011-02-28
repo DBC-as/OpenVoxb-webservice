@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:voxb="http://oss.dbc.dk/ns/voxb" targetNamespace="http://oss.dbc.dk/ns/voxb">
-	<wsdl:documentation>VoxB  (voxb wsdl), V. 0.1 (rev. 01.10.09)</wsdl:documentation>
 	<wsdl:types>
 		<xs:schema elementFormDefault="qualified">
 			<xs:import namespace="http://oss.dbc.dk/ns/voxb" schemaLocation="voxb.xsd"/>
@@ -260,7 +259,7 @@
 	</wsdl:binding>
 	<wsdl:service name="userGeneratedDataService">
 		<wsdl:port name="userGeneratedDataPortType" binding="voxb:userGeneratedDataBinding">
-			<soap:address location="https://voxb.addi.dk/0.5"/>
+			<soap:address location="https://voxb.addi.dk/1.0"/>
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>

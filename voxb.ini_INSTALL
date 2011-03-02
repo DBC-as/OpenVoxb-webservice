@@ -14,6 +14,9 @@ salt = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ; wsdl for service
 wsdl = xml/voxb.wsdl
 
+; URL for the OpenXId webservice
+openxid_url = someurl
+
 ; in_house_domain may use ?ShowInfo and use create_sample form
 in_house_domain = .dbc.dk
 

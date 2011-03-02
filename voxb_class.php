@@ -124,6 +124,85 @@ class voxb_logger {
 }
 
 
+
+//==============================================================================
+
+/** \brief openXidWrapper
+ *
+ * This class takes care of packing and sending an openXId request, an receiving the
+ * corresponding response to it, and unpack the response.
+ * 
+ * @param DOMNode $node Parent node, hvor alle børne elementer ønskes
+ * @return DOMNode array af DOMElement's
+ *
+ */
+
+class openXidWrapper {
+  private function __construct() {}
+  
+  private function _buildGetIdsRequest($requestedIds) {
+    $requestDom = new DOMDocument('1.0', 'UTF-8');
+    $requestDom->formatOutput = true;
+    $soapEnvelope = $requestDom->createElementNS('http://schemas.xmlsoap.org/soap/envelope/', 'soapenv:Envelope');
+    $soapEnvelope->setAttribute('xmlns:xid', 'http://oss.dbc.dk/ns/openxid');
+    $requestDom->appendChild($soapEnvelope);
+    $soapBody = $soapEnvelope->appendChild($requestDom->createElement('soapenv:Body'));
+    $getIdsRequest = $soapBody->appendChild($requestDom->createElement('xid:getIdsRequest'));
+    if (is_array($requestedIds)) foreach ($requestedIds as $requestedId) {
+      $id = $getIdsRequest->appendChild($requestDom->createElement('xid:id'));
+      if (strtolower($requestedId['idType']) == 'isbn') $requestedId['idType'] = 'EAN';    // Convert from isbn to EAN
+      $id->appendChild($requestDom->createElement('xid:idType', $requestedId['idType']));
+      $id->appendChild($requestDom->createElement('xid:idValue', $requestedId['idValue']));
+    }
+    return $requestDom->saveXML();
+  }
+
+  private function _parseGetIdsResponse($response) {
+    $dom = DOMDocument::loadXML($response,  LIBXML_NOERROR);
+    $getIdsResponse = $dom->getElementsByTagName('getIdsResponse')->item(0);
+    if ($getIdsResponse->firstChild->localName == 'error') return $getIdsResponse->firstChild->nodeValue;
+    foreach ($getIdsResponse->childNodes as $getIdResult) {
+      $item = array();
+      if ($getIdResult->localName != 'getIdResult') continue;  // Unexpected - take the next getIdResult
+      $requestedId = $getIdResult->firstChild;
+      if ($requestedId->localName != 'requestedId') continue;  // Unexpected - take the next getIdResult
+      foreach ($requestedId->childNodes as $node) {
+        if ($node->localName == 'idType') $item['requestedId']['idType'] = $node->nodeValue;
+        if ($node->localName == 'idValue') $item['requestedId']['idValue'] = $node->nodeValue;
+      }
+      $next = $requestedId->nextSibling;
+      if ($next->localName == 'ids') {
+        $ids = $next;
+        $id = $ids->childNodes;
+        foreach ($id as $i) {
+          $idItem = array();
+          foreach ($i->childNodes as $child) {
+            if ($child->localName == 'idType') $idItem['idType'] = $child->nodeValue;
+            if ($child->localName == 'idValue') $idItem['idValue'] = $child->nodeValue;
+          }
+          $item['ids']['id'][] = $idItem;
+        }
+        $next = $ids->nextSibling;
+      }
+      if ($next->localName == 'error') {
+        $item['error'] = $next->nodeValue;
+      }
+    $result[] = $item;
+    }
+    return $result;
+  }
+
+  function sendGetIdsRequest($url, $requestedIds) {
+    $curl = new cURL();
+    $curl->set_timeout(10);
+    $curl->set_post_xml(self::_buildGetIdsRequest($requestedIds));
+    $res = $curl->get($url);
+    $curl->close();
+    return self::_parseGetIdsResponse($res);
+  }
+  
+}
+
 //==============================================================================
 
 
@@ -624,37 +703,52 @@ class voxb extends webServiceServer {
     if (empty($contentType)) {
       return self::_error(CONTENTTYPES_MISSING);
     }
-    
+
     $result = array();
     if (is_array($params->fetchData)) {
       $fetchData = &$params->fetchData;
     } else {
       $fetchData[] = &$params->fetchData;
     }
-    $items = array();
-    $olist = array();
+    $ilist = $olist = $openXIds = array();
     if (is_array($fetchData)) {
       foreach ($fetchData as $v) {
         if (isset($v->_value->voxbIdentifier->_value)) {
           // Requested data element is an item
-          $items[] = $v->_value->voxbIdentifier->_value;
+          $ilist[] = $v->_value->voxbIdentifier->_value;
           $result[]['ITEM'] = $v->_value->voxbIdentifier->_value;
         } else {
           // Requested data element is an object
           $olist[] = "(OBJECTIDENTIFIERVALUE='" . $v->_value->objectIdentifierValue->_value . "' AND OBJECTIDENTIFIERTYPE='" . $v->_value->objectIdentifierType->_value . "')";
+          $openXIds[] = array('idType'=> $v->_value->objectIdentifierType->_value, 'idValue'=> $v->_value->objectIdentifierValue->_value);
           $result[]['OBJECT'] = array("VALUE" => $v->_value->objectIdentifierValue->_value, "TYPE" => $v->_value->objectIdentifierType->_value);
         }
       }
     }
-    $item_where = "ITEMIDENTIFIERVALUE in (" . implode(",", $items) . ")";
-    $object_where = implode(" OR ", $olist);
+
+    // Find additional objects similar to the objects listed - using openXId
+    if (!empty($openXIds)) {
+      $openXIdMatches = openXidWrapper::sendGetIdsRequest($this->config->get_value("openxid_url", "setup"), $openXIds);
+      $oxid_list = $oxidIds =  array();  // Initial value
+      if (is_array($openXIdMatches)) {
+        foreach ($openXIdMatches as $match) {
+          if (is_array($match['ids']['id'])) {
+            $oxidIds[] = array('requestedId'=>$match['requestedId'], 'id'=>$match['ids']['id']);
+            foreach ($match['ids']['id'] as $m) {
+              $oxid_list[] = "(OBJECTIDENTIFIERVALUE='{$m['idValue']}' AND OBJECTIDENTIFIERTYPE='" . strtoupper($m['idType']) . "')";
+            }
+          }
+        }
+      }
+    }
 
     // Fetch object data
     if (!empty($olist)) {
       try {
-        $this->oci->set_query("SELECT distinct * FROM voxb_objects WHERE $object_where");
+        $this->oci->set_query("SELECT distinct * FROM voxb_objects WHERE " . implode(" OR ", array_merge($olist, $oxid_list)));
         while ($data = $this->oci->fetch_into_assoc()) {
           $object_data[$data['OBJECTID']] = $data;
+          $objects_by_id[$data['OBJECTIDENTIFIERTYPE'] . $data['OBJECTIDENTIFIERVALUE']] = &$object_data[$data['OBJECTID']];
         }
       }
       catch (ociException $e) {
@@ -666,16 +760,31 @@ class voxb extends webServiceServer {
       }
     }
 
+    // Calculate the $derived_oxid_id array, that gives the requested id from any id/oxid
+    if (is_array($oxidIds)) foreach ($oxidIds as $ox) {
+      if (is_array($ox['id'])) foreach ($ox['id'] as $id) {
+        $requested_object_id = $objects_by_id[strtoupper($ox['requestedId']['idType']) . $ox['requestedId']['idValue']]['OBJECTID'];
+        $lll = strtoupper($id['idType']) . $id['idValue'];
+        $obj = $objects_by_id[strtoupper($id['idType']) . $id['idValue']];
+        if (!empty($obj)) {
+          $derived_oxid_id[$obj['OBJECTID']] = $requested_object_id;
+        }
+      }
+    }
+
     // Fetch item data
     try {
-      if (!empty($object_where)) $where_clause[] = "i.objectid IN (select distinct objectid from voxb_objects where $object_where)";
-      if (!empty($items)) $where_clause[] = $item_where;
+      $where_clause = array();
+      if (!empty($olist))     $where_clause[] = "i.objectid IN (select distinct objectid from voxb_objects where " . implode(" OR ", $olist) . ")";
+      if (!empty($oxid_list)) $where_clause[] = "i.objectid IN (select distinct objectid from voxb_objects where " . implode(" OR ", $oxid_list) . ")";
+      if (!empty($ilist))     $where_clause[] = "ITEMIDENTIFIERVALUE in (" . implode(",", $ilist) . ")";
       if (empty($where_clause)) {
         return self::_error(NO_ITEMS_OR_OBJECTS_TO_FETCH);
       }
       $this->oci->set_query("select ITEMIDENTIFIERVALUE, USERID, OBJECTID, RATING, replace(to_char(creation_date, 'YYYY-MM-DD=HH24:MI:SS'), '=', 'T') || '+01:00' as CREATION_DATE from voxb_items i " .
                       "where (" . implode(" OR ", $where_clause) . ") and disabled IS NULL");
       while ($data = $this->oci->fetch_into_assoc()) {
+        $data['OBJECTID'] = $derived_oxid_id[$data['OBJECTID']];  // Overwrite the openxid's object id with the requested object id (though we know that this is a "similar" id derived from openxid)
         $item_data[$data['ITEMIDENTIFIERVALUE']] = $data;
       }
     } catch (ociException $e) {
@@ -744,12 +853,6 @@ class voxb extends webServiceServer {
         }
       }
       unset($review);
-    }
-    // Put all this stuff into the $result array, that already contains the id's of the requested data
-    if (is_array($object_data)) {
-      foreach ($object_data as $kObject=>$object) {  // Make object data indexable
-        $objects_by_id[$object['OBJECTIDENTIFIERTYPE'] . $object['OBJECTIDENTIFIERVALUE']] = &$object_data[$kObject];
-      }
     }
 
     // Fetch user data and put into the $item_data array

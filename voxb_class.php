@@ -159,6 +159,7 @@ class openXidWrapper {
 
   private function _parseGetIdsResponse($response) {
     $dom = DOMDocument::loadXML($response,  LIBXML_NOERROR);
+    if (empty($dom)) return "Error parsing the DOM Document";
     $getIdsResponse = $dom->getElementsByTagName('getIdsResponse')->item(0);
     if ($getIdsResponse->firstChild->localName == 'error') return $getIdsResponse->firstChild->nodeValue;
     foreach ($getIdsResponse->childNodes as $getIdResult) {
@@ -728,7 +729,7 @@ class voxb extends webServiceServer {
 
     // Find additional objects similar to the objects listed - using openXId
     if (!empty($openXIds)) {
-      $openXIdMatches = openXidWrapper::sendGetIdsRequest($this->config->get_value("openxid_url", "setup"), $openXIds);
+      $openXIdMatches = openXidWrapper::sendGetIdsRequest($this->config->get_value("openxid_url", "setup") . '/', $openXIds);
       $oxid_list = $oxidIds =  array();  // Initial value
       if (is_array($openXIdMatches)) {
         foreach ($openXIdMatches as $match) {
@@ -784,7 +785,9 @@ class voxb extends webServiceServer {
       $this->oci->set_query("select ITEMIDENTIFIERVALUE, USERID, OBJECTID, RATING, replace(to_char(creation_date, 'YYYY-MM-DD=HH24:MI:SS'), '=', 'T') || '+01:00' as CREATION_DATE from voxb_items i " .
                       "where (" . implode(" OR ", $where_clause) . ") and disabled IS NULL");
       while ($data = $this->oci->fetch_into_assoc()) {
-        $data['OBJECTID'] = $derived_oxid_id[$data['OBJECTID']];  // Overwrite the openxid's object id with the requested object id (though we know that this is a "similar" id derived from openxid)
+        if (isset($derived_oxid_id[$data['OBJECTID']])) {
+          $data['OBJECTID'] = $derived_oxid_id[$data['OBJECTID']];  // Overwrite the openxid's object id with the requested object id (though we know that this is a "similar" id derived from openxid)
+        }
         $item_data[$data['ITEMIDENTIFIERVALUE']] = $data;
       }
     } catch (ociException $e) {

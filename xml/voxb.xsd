@@ -511,6 +511,7 @@
 			<xs:sequence>
 				<xs:element ref="voxb:voxbIdentifier"/>
 				<xs:element ref="voxb:timestamp"/>
+				<xs:element ref="voxb:timestampModified"/>
 				<xs:element ref="voxb:item"/>
 				<xs:element ref="voxb:object"/>
 			</xs:sequence>
@@ -591,6 +592,11 @@
 			<xs:documentation xml:lang="en">The timestamp from the VOXB database.  In RFC-3339 (ex. 2009-09-09T09:09:09+00:01)</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:element name="timestampModified" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The time from the VOXB database that an item has last been modified.  In RFC-3339 (ex. 2009-09-09T09:09:09+00:01)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
 	<xs:element name="totalItemData">
 		<xs:complexType>
 			<xs:sequence>
@@ -669,6 +675,7 @@
 				<xs:element ref="voxb:review" minOccurs="0"/>
 				<xs:element ref="voxb:local" minOccurs="0" maxOccurs="unbounded"/>
 				<xs:element ref="voxb:timestamp"/>
+				<xs:element ref="voxb:timestampModified"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -800,6 +807,8 @@
 			</xs:enumeration>
 			<xs:enumeration value="TIMESTAMPMIN"/>
 			<xs:enumeration value="TIMESTAMPMAX"/>
+			<xs:enumeration value="TIMESTAMPMODIFIEDMIN"/>
+			<xs:enumeration value="TIMESTAMPMODIFIEDMAX"/>
 			<xs:enumeration value="USERID"/>
 		</xs:restriction>
 	</xs:simpleType>

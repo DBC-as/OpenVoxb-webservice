@@ -1228,8 +1228,6 @@ class voxb extends webServiceServer {
       $this->log->add_p1(2);  // 2 means authenticationFingerPrint used
       if ($aFv->userIdentifierType->_value=="CPR") {
         
-        $kuk = $this->config->get_value("salt", "setup");
-        
         $userIdentifierValue = md5($this->_normalize_cpr($aFv->userIdentifierValue->_value) . $this->config->get_value("salt", "setup"));
         try {
           $this->oci->bind("userIdentifierValue", $userIdentifierValue);

@@ -2,7 +2,7 @@
 
 [setup]
 ; version
-version = 0.5
+version = Trunk
 
 xmldir = ./xml
 
@@ -79,6 +79,7 @@ dump_timer = voxb(%s)
 ; the FORS-server or aaa_ip_rights below
 ;
 ; oci credentials for FORS server
+aaa_use_vip = TRUE
 aaa_credentials = some_user/some_pwd@some.server.dbc.dk
 ; memcache server - use localhost in one-webserver environment
 ;aaa_cache_address = localhost:11211

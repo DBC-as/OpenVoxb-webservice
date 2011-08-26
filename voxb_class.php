@@ -41,6 +41,7 @@ $voxb_error = array(
   ERROR_UPDATING_TAGS_IN_DATABASE => "Error updating tags in database",
   FINGERPRINT_NOT_VALID => "Fingerprint not valid",
   FOUND_NO_ITEM_FROM_GIVEN_VOXBIDENTIFIER => "Found no item from given voxbIdentifier",
+  FOUND_NO_INSTITUTIONNAME_FROM_GIVEN_ITEMIDENTIFIERVALUE => "Found no institutionName from given ItemiIdentifierValue",
   NO_FIELDS_TO_UPDATE => "No fields to update",
   NO_ITEMS_OR_OBJECTS_TO_FETCH => "No items or objects to fetch",
   NO_USER_FOUND_WITH_GIVEN_ID => "No user found with given id",
@@ -95,7 +96,7 @@ class voxb_logger {
     $elapsed = microtime(true) - $this->timestamp;
     self::log($elapsed);
   }
-  
+
   function log($elapsed=0) {
     if (empty($this->caller->oci)) {
       verbose::log(FATAL, "Voxb Error $this->error in $this->method, $elapsed");
@@ -211,7 +212,6 @@ class voxb extends webServiceServer {
   var $content;
   var $response;
   var $log;
-
 
   /** createMyData
    *
@@ -1305,70 +1305,8 @@ class voxb extends webServiceServer {
       return self::_error($error);
     }
 
-    // NB Det nye database layout for reviews og locals og tags er ikke implementeret herunder
-    //    Ligesom den nye logging heller ikke er implementeret
-
-    $aFv = &$params->authenticationFingerprint->_value;
-    if (!is_numeric($params->voxbIdentifier->_value)) {
-      return self::_error(VOXBIDENTIFIER_INVALID_MUST_BE_AN_INTEGER);
-    }
-
-    if (empty($aFv->userIdentifierValue->_value) || empty($aFv->userIdentifierType->_value) || empty($aFv->identityProvider->_value)) {
-      return self::_error(FINGERPRINT_NOT_VALID);
-    }
-
-    /* fetch by fingerprint */
-    if (isset($aFv->institutionName->_value)) {
-
-      if ($aFv->userIdentifierType->_value=="CPR") {
-        $userIdentifierValue = md5($this->_normalize_cpr($aFv->userIdentifierValue->_value) . $this->config->get_value("salt", "setup"));
-      } else {
-        $userIdentifierValue = $aFv->userIdentifierValue->_value;
-      }
-
-      try {
-        $this->oci->bind("userIdentifierValue", $userIdentifierValue);
-        $this->oci->bind("userIdentifierType", $aFv->userIdentifierType->_value);
-        $this->oci->bind("identityProvider", $aFv->identityProvider->_value);
-        $this->oci->bind("institutionName", $aFv->institutionName->_value);
-        $this->oci->set_query("SELECT * FROM voxb_users WHERE userIdentifierValue=:userIdentifierValue AND userIdentifierType=:userIdentifierType AND identityProvider=:identityProvider AND institutionName=:institutionName AND disabled IS NULL");
-        $data = $this->oci->fetch_into_assoc();
-      } catch (ociException $e) {
-        verbose::log(FATAL, "reportOffensiveContent(".__LINE__."):: OCI select error: " . $this->oci->get_error_string());
-        return self::_error(COULD_NOT_LOCATE_USER_WITH_GIVEN_FINGERPRINT);
-      }
-
-    } else {  // institutionName not given in input
-      
-      if ($aFv->userIdentifierType->_value=='CPR') {
-        try {
-          $this->oci->bind("userIdentifierValue", md5($this->_normalize_cpr($aFv->userIdentifierValue->_value) . $this->config->get_value("salt", "setup")));
-          $this->oci->set_query("SELECT * FROM voxb_users WHERE userIdentifierValue=:userIdentifierValue AND disabled IS NULL");
-          $data = $this->oci->fetch_into_assoc();
-        } catch (ociException $e) {
-          verbose::log(FATAL, "reportOffensiveContent(".__LINE__."):: OCI select error: " . $this->oci->get_error_string());
-          return self::_error(COULD_NOT_LOCATE_USER_WITH_GIVEN_FINGERPRINT);
-        }
-      } else {  // userIdentifierType is not CPR
-        try {
-          $this->oci->bind("userIdentifierType", $aFv->userIdentifierType->_value);
-          $this->oci->bind("identityProvider", $aFv->identityProvider->_value);
-          $this->oci->set_query("SELECT * FROM voxb_users WHERE userIdentifierValue=:userIdentifierValue AND userIdentifierType=:userIdentifierType AND identityProvider=:identityProvider AND disabled IS NULL");
-          $data = $this->oci->fetch_into_assoc();
-        } catch (ociException $e) {
-          verbose::log(FATAL, "reportOffensiveContent(".__LINE__."):: OCI select error: " . $this->oci->get_error_string());
-          return self::_error(COULD_NOT_LOCATE_USER_WITH_GIVEN_FINGERPRINT);
-        }
-      }
-    }
-
-    if (!is_numeric($data['USERID'])) {
-      return self::_error(COULD_NOT_LOCATE_USER_WITH_GIVEN_FINGERPRINT);
-    }
-    $this->log->set_userId($data['USERID']);
-
     $offending_itemId = $params->voxbIdentifier->_value;
-    $complainant_userId = $data['USERID'];
+    $complainant_userId = $params->userId->_value;
 
     try {
       $this->oci->bind("offending_itemId", $offending_itemId);
@@ -1384,22 +1322,39 @@ class voxb extends webServiceServer {
     }
 
     $offending_userId = $data['USERID'];
+
     try {
-      $this->oci->set_query("INSERT into voxb_complaints (OFFENDING_ITEMID, OFFENDER_USERID, COMPLAINANT_USERID) VALUES('$offending_itemId', $complainant_userId, $offending_userId)");
+      $this->oci->bind("itemIdentifierValue", $offending_itemId);
+      $this->oci->set_query("select institutionname from voxb_users where userid=(select userid from voxb_items where itemIdentifierValue=:itemIdentifierValue)");
+      $data = $this->oci->fetch_into_assoc();
+    } catch (ociException $e) {
+      verbose::log(FATAL, "reportOffensiveContent(".__LINE__."):: OCI select error: " . $this->oci->get_error_string());
+      return self::_error(FOUND_NO_INSTITUTIONNAME_FROM_GIVEN_ITEMIDENTIFIERVALUE);
+    }
+
+		$offender_institutionname = $data['INSTITUTIONNAME'];
+
+    try {
+      $this->oci->set_query("INSERT into voxb_complaints (OFFENDING_ITEMID, OFFENDER_INSTITUTIONNAME, OFFENDER_USERID, COMPLAINANT_USERID, STATUS) VALUES('$offending_itemId', '$offender_institutionname', $offending_userId, $complainant_userId, '".COMPLAINT_STATUS_NEW."')");
       $this->oci->commit();
     } catch (ociException $e) {
       verbose::log(FATAL, "reportOffensiveContent(".__LINE__."):: OCI insert/commit error: " . $this->oci->get_error_string());
+      $this->oci->bind("complainant_userId", $complainant_userId);
+      $result=$this->oci->fetch_into_assoc("select * from voxb_users where userid=:complainant_userId");
+			if(empty($result)) {
+      	return self::_error(COULD_NOT_CREATE_DATA_USERID_DID_NOT_EXIST);
+			} 
       return self::_error(ERROR_INSERTING_COMPLAINT_INTO_DATABASE);
     }
 
-    $this->_end_node($this->content, "voxbIdentifier", $params->voxbIdentifier->_value);
+    $this->_end_node($this->content, "userId", $params->userId->_value);
     return $this->_epilog($this->response);
   }
 
 
 
   /** searchData
-   *
+					 *
    *
    * Statistics (logging)
    * - p1 = qualifier

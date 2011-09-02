@@ -12,7 +12,7 @@ ocilogon = some_user/some_pwd@some.server.dbc.dk
 salt = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
 ; wsdl for service
-wsdl = xml/voxb.wsdl
+wsdl = voxb.wsdl
 
 ; URL for the OpenXId webservice
 openxid_url = someurl
@@ -24,10 +24,10 @@ in_house_domain = .dbc.dk
 show_samples = TRUE
 
 ; validate
-;validate[soap_request] = xml/soap.xsd ; validerer soap envelopen
-;validate[soap_response] = xml/soap.xsd
-;validate[request] = xml/voxb.xsd
-;validate[response] = xml/voxb.xsd
+;validate[soap_request] = soap.xsd ; validerer soap envelopen
+;validate[soap_response] = soap.xsd
+;validate[request] = voxb.xsd
+;validate[response] = voxb.xsd
 
 ; soapActions and their corresponding request structure
 ; Can be found in the wsdl but is stated here for convenience

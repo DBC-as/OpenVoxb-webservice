@@ -78,8 +78,8 @@ class voxb_complaints {
 
 		$offender_data=$this->oci2->fetch_into_assoc("select * from voxb_users where userid=".$complaint_data['OFFENDER_USERID']."");
 		$complainant_data=$this->oci2->fetch_into_assoc("select * from voxb_users where userid=".$complaint_data['COMPLAINANT_USERID']."");
-    $this->oci2->bind("offender_institutionname", $complaint_data['OFFENDER_INSTITUTIONNAME']);
-    $institution_data=$this->oci2->fetch_into_assoc("select * from voxb_institutions where institutionname=:offender_institutionname");
+    $this->oci2->bind("offender_institutionid", $complaint_data['OFFENDER_INSTITUTIONID']);
+    $institution_data=$this->oci2->fetch_into_assoc("select * from voxb_institutions where institutionid=:offender_institutionid");
 
 		// prepare and send mail
 		$to=$institution_data["MODERATOR_EMAIL"];

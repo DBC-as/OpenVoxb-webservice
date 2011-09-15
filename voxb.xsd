@@ -286,7 +286,7 @@
 				<xs:element ref="voxb:userIdentifierValue"/>
 				<xs:element ref="voxb:userIdentifierType"/>
 				<xs:element ref="voxb:identityProvider"/>
-				<xs:element ref="voxb:institutionName"/>
+				<xs:element ref="voxb:institutionId"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -331,9 +331,9 @@
 			<xs:documentation xml:lang="en">The name of the authentication provider. On the same institution you can have more than one way to log on to the system. To make sure to identify the user correct	both  IdentityProvider, UserIdentifier and userIdentifierType will be the same.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="institutionName" type="xs:string">
+	<xs:element name="institutionId" type="xs:string">
 		<xs:annotation>
-			<xs:documentation xml:lang="en">The name of the institution where the user is logged on.</xs:documentation>
+			<xs:documentation xml:lang="en">Identifier of the institution where the user is logged on.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="item">

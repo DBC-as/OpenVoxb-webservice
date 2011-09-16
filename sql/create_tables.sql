@@ -29,6 +29,7 @@ CREATE SEQUENCE voxb_complaints_seq MINVALUE 1 START WITH 1 INCREMENT BY 1 NOCAC
 CREATE SEQUENCE voxb_logs_seq MINVALUE 1 START WITH 1 INCREMENT BY 1 NOCACHE;
 
 create table voxb_institutions (
+  institutionId number NOT NULL,
   institutionName varchar2(128) DEFAULT NULL,
   contactperson_name varchar2(64) DEFAULT NULL,
   contactperson_email varchar2(128) DEFAULT NULL,
@@ -36,10 +37,11 @@ create table voxb_institutions (
   moderator_name varchar2(64) DEFAULT NULL,
   moderator_email varchar2(128) DEFAULT NULL,
   creation_date date default sysdate NOT NULL,
-  CONSTRAINT voxb_ins_pk PRIMARY KEY (institutionName)
+	CONSTRAINT voxb_ins_pk PRIMARY KEY (institutionId);
 );
 create table voxb_users (
 	userId number NOT NULL,
+	institutionId number,
 	alias_name varchar2(64) NOT NULL,
 	profileurl varchar2(4000) DEFAULT NULL,
 	userIdentifierValue varchar2(64) DEFAULT NULL,
@@ -49,8 +51,8 @@ create table voxb_users (
 	creation_date TIMESTAMP default sysdate NOT NULL,
 	modification_date TIMESTAMP default sysdate NOT NULL,
 	disabled number(1) default NULL,
+	CONSTRAINT ref_users_id FOREIGN KEY (institutionId) references voxb_institutions(institutionId),
 	CONSTRAINT voxb_users_uniq UNIQUE (alias_name, profileurl),
-	CONSTRAINT ref_users_id FOREIGN KEY (institutionName) references voxb_institutions(institutionName),
 	CONSTRAINT voxb_users_pk PRIMARY KEY (userId)
 );
 create table voxb_objects (
@@ -105,13 +107,14 @@ create table voxb_locals (
 );
 create table voxb_complaints (
   complaintId number NOT NULL,
+	offender_institutionId number,
 	offender_institutionName varchar2(128) DEFAULT NULL,
   offender_userId number NOT NULL,
 	offending_itemId varchar(32) NOT NULL,
   complainant_userId number NOT NULL,
   status varchar2(16) NOT NULL,
   creation_date date default sysdate NOT NULL,
-	CONSTRAINT ref_off_institutionName FOREIGN KEY (offender_institutionName) references voxb_institutions(institutionName),
+	CONSTRAINT ref_off_institutionName FOREIGN KEY (offender_institutionId) references voxb_institutions(institutionId),
   CONSTRAINT ref_off_userId FOREIGN KEY (offender_userId) references voxb_users(userId),
   CONSTRAINT ref_com_itemId FOREIGN KEY (offending_itemId) references voxb_items(itemIdentifierValue),
   CONSTRAINT ref_com_userId FOREIGN KEY (complainant_userId) references voxb_users(userId),

@@ -45,3 +45,23 @@ ALTER SEQUENCE voxb_tags_seq NOCACHE;
 ALTER SEQUENCE voxb_items_seq NOCACHE;
 ALTER SEQUENCE voxb_complaints_seq NOCACHE;
 ALTER SEQUENCE voxb_logs_seq NOCACHE;
+
+/* v1.1 institutionid instead of institutionname as primary key */
+alter table voxb_complaints disable constraint ref_off_institutionName;
+alter table voxb_complaints disable ref_off_institutionName;
+
+alter table voxb_complaints drop constraint ref_off_institutionName;
+alter table voxb_users drop constraint ref_users_id;
+
+alter table voxb_institutions drop primary key;
+alter table voxb_institutions add CONSTRAINT voxb_ins_pk PRIMARY KEY (institutionId);
+
+alter table voxb_complaints add (offender_institutionId number);
+alter table voxb_complaints add CONSTRAINT ref_off_institutionName FOREIGN KEY (offender_institutionId) references voxb_institutions(institutionId);
+
+alter table voxb_users add (institutionId number);
+alter table voxb_users add CONSTRAINT ref_users_id FOREIGN KEY (institutionId) references voxb_institutions(institutionId);
+
+update voxb_users u set institutionId = (select i.institutionId from voxb_institutions i where u.institutionName = i.institutionName);
+update voxb_complaints c set offender_institutionId = (select i.institutionId from voxb_institutions i where c.offender_institutionName = i.institutionName);
+

@@ -1325,17 +1325,17 @@ class voxb extends webServiceServer {
 
     try {
       $this->oci->bind("itemIdentifierValue", $offending_itemId);
-      $this->oci->set_query("select institutionname from voxb_users where userid=(select userid from voxb_items where itemIdentifierValue=:itemIdentifierValue)");
+      $this->oci->set_query("select institutionid from voxb_users where userid=(select userid from voxb_items where itemIdentifierValue=:itemIdentifierValue)");
       $data = $this->oci->fetch_into_assoc();
     } catch (ociException $e) {
       verbose::log(FATAL, "reportOffensiveContent(".__LINE__."):: OCI select error: " . $this->oci->get_error_string());
       return self::_error(FOUND_NO_INSTITUTIONNAME_FROM_GIVEN_ITEMIDENTIFIERVALUE);
     }
 
-		$offender_institutionname = $data['INSTITUTIONNAME'];
+		$offender_institutionid = $data['INSTITUTIONID'];
 
     try {
-      $this->oci->set_query("INSERT into voxb_complaints (OFFENDING_ITEMID, OFFENDER_INSTITUTIONNAME, OFFENDER_USERID, COMPLAINANT_USERID, STATUS) VALUES('$offending_itemId', '$offender_institutionname', $offending_userId, $complainant_userId, '".COMPLAINT_STATUS_NEW."')");
+      $this->oci->set_query("INSERT into voxb_complaints (OFFENDING_ITEMID, OFFENDER_INSTITUTIONID, OFFENDER_USERID, COMPLAINANT_USERID, STATUS) VALUES('$offending_itemId', '$offender_institutionid', $offending_userId, $complainant_userId, '".COMPLAINT_STATUS_NEW."')");
       $this->oci->commit();
     } catch (ociException $e) {
       verbose::log(FATAL, "reportOffensiveContent(".__LINE__."):: OCI insert/commit error: " . $this->oci->get_error_string());

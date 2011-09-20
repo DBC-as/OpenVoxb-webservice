@@ -41,7 +41,7 @@ $voxb_error = array(
   ERROR_UPDATING_TAGS_IN_DATABASE => "Error updating tags in database",
   FINGERPRINT_NOT_VALID => "Fingerprint not valid",
   FOUND_NO_ITEM_FROM_GIVEN_VOXBIDENTIFIER => "Found no item from given voxbIdentifier",
-  FOUND_NO_INSTITUTIONNAME_FROM_GIVEN_ITEMIDENTIFIERVALUE => "Found no institutionName from given ItemiIdentifierValue",
+  FOUND_NO_INSTITUTIONID_FROM_GIVEN_ITEMIDENTIFIERVALUE => "Found no institutionId from given ItemiIdentifierValue",
   NO_FIELDS_TO_UPDATE => "No fields to update",
   NO_ITEMS_OR_OBJECTS_TO_FETCH => "No items or objects to fetch",
   NO_USER_FOUND_WITH_GIVEN_ID => "No user found with given id",
@@ -159,7 +159,7 @@ class openXidWrapper {
   }
 
   private function _parseGetIdsResponse($response) {
-    $dom = DOMDocument::loadXML($response,  LIBXML_NOERROR);
+    @$dom = DOMDocument::loadXML($response,  LIBXML_NOERROR);
     if (empty($dom)) return "Error parsing the DOM Document";
     $getIdsResponse = $dom->getElementsByTagName('getIdsResponse')->item(0);
     if ($getIdsResponse->firstChild->localName == 'error') return $getIdsResponse->firstChild->nodeValue;
@@ -398,7 +398,7 @@ class voxb extends webServiceServer {
     $userIdentifierValue = str_replace("'", "''", strip_tags($params->authenticationFingerprint->_value->userIdentifierValue->_value));
     $userIdentifierType = str_replace("'", "''", strip_tags($params->authenticationFingerprint->_value->userIdentifierType->_value));
     $identityProvider = str_replace("'", "''", strip_tags($params->authenticationFingerprint->_value->identityProvider->_value));
-    $institutionName = str_replace("'", "''", strip_tags($params->authenticationFingerprint->_value->institutionName->_value));
+    $institutionId = str_replace("'", "''", strip_tags($params->authenticationFingerprint->_value->institutionId->_value));
 
     if ($userIdentifierType=="CPR") {
       $userIdentifierValue = md5($this->_normalize_cpr($userIdentifierValue) . $this->config->get_value("salt", "setup"));
@@ -435,8 +435,8 @@ class voxb extends webServiceServer {
 
     try {
       $sql = "INSERT
-              INTO voxb_users (alias_name, profileurl, userIdentifierValue, userIdentifierType, identityProvider, institutionName) 
-              VALUES ('$aliasName', '$profileurl', '$userIdentifierValue', '$userIdentifierType', '$identityProvider', '$institutionName')";
+              INTO voxb_users (alias_name, profileurl, userIdentifierValue, userIdentifierType, identityProvider, institutionId) 
+              VALUES ('$aliasName', '$profileurl', '$userIdentifierValue', '$userIdentifierType', '$identityProvider', '$institutionId')";
       $this->oci->set_query($sql);
       $this->oci->commit();
       $this->oci->set_query("SELECT voxb_users_seq.currval AS ID FROM dual");
@@ -1221,7 +1221,7 @@ class voxb extends webServiceServer {
       if (empty($aFv->userIdentifierValue->_value)
         || empty($aFv->userIdentifierType->_value)
         || empty($aFv->identityProvider->_value)
-        || empty($aFv->institutionName->_value)) {
+        || empty($aFv->institutionId->_value)) {
         return self::_error(FINGERPRINT_NOT_VALID);
       }
       /* fetch by fingerprint */
@@ -1257,7 +1257,7 @@ class voxb extends webServiceServer {
         if (($uData['USERIDENTIFIERVALUE'] == $userIdentifierValue) and
             ($uData['USERIDENTIFIERTYPE'] == $aFv->userIdentifierType->_value) and
             ($uData['IDENTITYPROVIDER'] == $aFv->identityProvider->_value) and
-            ($uData['INSTITUTIONNAME'] == $aFv->institutionName->_value) ) {
+            ($uData['INSTITUTIONID'] == $aFv->institutionId->_value) ) {
           $found = true;
           break;
         }
@@ -1284,7 +1284,7 @@ class voxb extends webServiceServer {
         $this->_end_node($aF, "userIdentifierValue", $data[$k]["USERIDENTIFIERVALUE"]);
         $this->_end_node($aF, "userIdentifierType", $data[$k]["USERIDENTIFIERTYPE"]);
         $this->_end_node($aF, "identityProvider", $data[$k]["IDENTITYPROVIDER"]);
-        $this->_end_node($aF, "institutionName", $data[$k]["INSTITUTIONNAME"]);
+        $this->_end_node($aF, "institutionId", $data[$k]["INSTITUTIONID"]);
       }
     }
     return $this->_epilog($this->response);
@@ -1329,7 +1329,7 @@ class voxb extends webServiceServer {
       $data = $this->oci->fetch_into_assoc();
     } catch (ociException $e) {
       verbose::log(FATAL, "reportOffensiveContent(".__LINE__."):: OCI select error: " . $this->oci->get_error_string());
-      return self::_error(FOUND_NO_INSTITUTIONNAME_FROM_GIVEN_ITEMIDENTIFIERVALUE);
+      return self::_error(FOUND_NO_INSTITUTIONID_FROM_GIVEN_ITEMIDENTIFIERVALUE);
     }
 
 		$offender_institutionid = $data['INSTITUTIONID'];
@@ -1667,8 +1667,8 @@ class voxb extends webServiceServer {
     if (isset($aFv->identityProvider->_value))
       $u['identityProvider'] = $aFv->identityProvider->_value;
 
-    if (isset($aFv->institutionName->_value))
-      $u['institutionName'] = $aFv->institutionName->_value;
+    if (isset($aFv->institutionId->_value))
+      $u['institutionId'] = $aFv->institutionId->_value;
 
     if (empty($u)) {
       return self::_error(NO_FIELDS_TO_UPDATE);

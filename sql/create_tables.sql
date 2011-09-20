@@ -29,25 +29,23 @@ CREATE SEQUENCE voxb_complaints_seq MINVALUE 1 START WITH 1 INCREMENT BY 1 NOCAC
 CREATE SEQUENCE voxb_logs_seq MINVALUE 1 START WITH 1 INCREMENT BY 1 NOCACHE;
 
 create table voxb_institutions (
-  institutionId number NOT NULL,
-  institutionName varchar2(128) DEFAULT NULL,
+  institutionId varchar2(32) NOT NULL,
   contactperson_name varchar2(64) DEFAULT NULL,
   contactperson_email varchar2(128) DEFAULT NULL,
   contactperson_phone number(8) DEFAULT NULL,
   moderator_name varchar2(64) DEFAULT NULL,
   moderator_email varchar2(128) DEFAULT NULL,
   creation_date date default sysdate NOT NULL,
-	CONSTRAINT voxb_ins_pk PRIMARY KEY (institutionId);
+	CONSTRAINT voxb_ins_pk PRIMARY KEY (institutionId)
 );
 create table voxb_users (
 	userId number NOT NULL,
-	institutionId number,
+	institutionId varchar2(32),
 	alias_name varchar2(64) NOT NULL,
 	profileurl varchar2(4000) DEFAULT NULL,
 	userIdentifierValue varchar2(64) DEFAULT NULL,
 	userIdentifierType varchar2(16) DEFAULT NULL,
 	identityProvider varchar2(64) DEFAULT NULL,
-	institutionName varchar2(128) DEFAULT NULL,
 	creation_date TIMESTAMP default sysdate NOT NULL,
 	modification_date TIMESTAMP default sysdate NOT NULL,
 	disabled number(1) default NULL,
@@ -55,6 +53,7 @@ create table voxb_users (
 	CONSTRAINT voxb_users_uniq UNIQUE (alias_name, profileurl),
 	CONSTRAINT voxb_users_pk PRIMARY KEY (userId)
 );
+exit
 create table voxb_objects (
   objectId number NOT NULL,
   objectIdentifierValue varchar2(32) NOT NULL,

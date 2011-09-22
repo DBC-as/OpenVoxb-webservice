@@ -40,7 +40,7 @@ create table voxb_institutions (
 );
 create table voxb_users (
 	userId number NOT NULL,
-	institutionId varchar2(32),
+	institutionId varchar2(32) NOT NULL,
 	alias_name varchar2(64) NOT NULL,
 	profileurl varchar2(4000) DEFAULT NULL,
 	userIdentifierValue varchar2(64) DEFAULT NULL,
@@ -53,7 +53,6 @@ create table voxb_users (
 	CONSTRAINT voxb_users_uniq UNIQUE (alias_name, profileurl),
 	CONSTRAINT voxb_users_pk PRIMARY KEY (userId)
 );
-exit
 create table voxb_objects (
   objectId number NOT NULL,
   objectIdentifierValue varchar2(32) NOT NULL,
@@ -106,14 +105,13 @@ create table voxb_locals (
 );
 create table voxb_complaints (
   complaintId number NOT NULL,
-	offender_institutionId number,
-	offender_institutionName varchar2(128) DEFAULT NULL,
+	offender_institutionId varchar2(32) DEFAULT NULL,
   offender_userId number NOT NULL,
 	offending_itemId varchar(32) NOT NULL,
   complainant_userId number NOT NULL,
   status varchar2(16) NOT NULL,
   creation_date date default sysdate NOT NULL,
-	CONSTRAINT ref_off_institutionName FOREIGN KEY (offender_institutionId) references voxb_institutions(institutionId),
+	CONSTRAINT ref_off_institutionId FOREIGN KEY (offender_institutionId) references voxb_institutions(institutionId),
   CONSTRAINT ref_off_userId FOREIGN KEY (offender_userId) references voxb_users(userId),
   CONSTRAINT ref_com_itemId FOREIGN KEY (offending_itemId) references voxb_items(itemIdentifierValue),
   CONSTRAINT ref_com_userId FOREIGN KEY (complainant_userId) references voxb_users(userId),
@@ -154,7 +152,7 @@ CREATE OR REPLACE TRIGGER voxb_seq_complaints BEFORE INSERT ON voxb_complaints F
 CREATE OR REPLACE TRIGGER voxb_seq_logs BEFORE INSERT ON voxb_logs FOR EACH ROW BEGIN SELECT voxb_logs_seq.NEXTVAL INTO :NEW.logId FROM DUAL; END;
 /
 
-create index voxb_users_idx on voxb_users (userIdentifierValue,userIdentifierType,identityProvider,institutionName,disabled);
+create index voxb_users_idx on voxb_users (userIdentifierValue,userIdentifierType,identityProvider,institutionId,disabled);
 create index voxb_objects_idx on voxb_objects (objectIdentifierValue,objectIdentifierType,objectTitle,objectContributors);
 create index voxb_reviews_idx on voxb_reviews (reviewId, title, type, data);
 create index voxb_locals_idx on voxb_locals (localId, data, type, itemType);

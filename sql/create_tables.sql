@@ -135,6 +135,25 @@ create table voxb_logs (
 	CONSTRAINT voxb_logs_pk PRIMARY KEY (logId)
 );
 
+create or replace trigger ins_complaints_instid_trg
+before insert on voxb_complaints
+for each row
+begin
+   if :new.offender_institutionId is null then
+     select institutionId
+     into :new.offender_institutionId
+     from voxb_institutions
+     where institutionname=:new.offender_institutionName;
+   end if;
+   if :new.offender_institutionName is null then
+     select institutionName
+     into :new.offender_institutionName
+     from voxb_institutions
+     where institutionId=:new.offender_institutionId;
+   end if;
+end;
+/
+
 CREATE OR REPLACE TRIGGER voxb_seq_users BEFORE INSERT ON voxb_users FOR EACH ROW BEGIN SELECT voxb_users_seq.NEXTVAL INTO :NEW.userId FROM DUAL; END; 
 /
 CREATE OR REPLACE TRIGGER voxb_seq_objects BEFORE INSERT ON voxb_objects FOR EACH ROW BEGIN SELECT voxb_objects_seq.NEXTVAL INTO :NEW.objectId FROM DUAL; END; 

@@ -47,7 +47,7 @@
 	</xs:element>
 	<xs:element name="deleteUserRequest">
 		<xs:annotation>
-			<xs:documentation xml:lang="en">Only the link between this fingerprint and Alias is deleted.  If no more links to the Alias, the Alias is deleted as well.</xs:documentation>
+			<xs:documentation xml:lang="en">Will also delete all of user's item</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>

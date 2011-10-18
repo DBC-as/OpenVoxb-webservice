@@ -47,21 +47,37 @@ ALTER SEQUENCE voxb_complaints_seq NOCACHE;
 ALTER SEQUENCE voxb_logs_seq NOCACHE;
 
 /* v1.1 institutionid instead of institutionname as primary key */
-alter table voxb_complaints disable constraint ref_off_institutionName;
-alter table voxb_complaints disable ref_off_institutionName;
-
-alter table voxb_complaints drop constraint ref_off_institutionName;
+alter table voxb_institutions add (institutionId number(6));
+update voxb_institutions set institutionId=rownum;
+alter table voxb_institutions modify (institutionId not null);
+alter table voxb_users add (institutionId number(6));
+update voxb_users u set institutionId=(select institutionId from voxb_institutions where institutionname=u.institutionName);
+--alter table voxb_users modify (institutionId number(6) not null);
 alter table voxb_users drop constraint ref_users_id;
-
-alter table voxb_institutions drop primary key;
-alter table voxb_institutions add CONSTRAINT voxb_ins_pk PRIMARY KEY (institutionId);
-
-alter table voxb_complaints add (offender_institutionId number);
-alter table voxb_complaints add CONSTRAINT ref_off_institutionName FOREIGN KEY (offender_institutionId) references voxb_institutions(institutionId);
-
-alter table voxb_users add (institutionId number);
-alter table voxb_users add CONSTRAINT ref_users_id FOREIGN KEY (institutionId) references voxb_institutions(institutionId);
-
-update voxb_users u set institutionId = (select i.institutionId from voxb_institutions i where u.institutionName = i.institutionName);
-update voxb_complaints c set offender_institutionId = (select i.institutionId from voxb_institutions i where c.offender_institutionName = i.institutionName);
+alter table voxb_complaints drop constraint ref_off_institutionName;
+alter table voxb_institutions drop constraint voxb_ins_pk;
+drop index voxb_ins_pk;
+alter table voxb_institutions add constraint voxb_ins_pk primary key (institutionId);
+alter table voxb_complaints add (offender_institutionId number(6) not null);
+update voxb_complaints c set offender_institutionId=(select institutionId from voxb_institutions where institutionname=c.offender_institutionName);
+alter table voxb_complaints add constraint ref_off_institutionId foreign key (offender_institutionId) references voxb_institutions(institutionId);
+alter table voxb_users add constraint ref_users_id foreign key (institutionId) references voxb_institutions(institutionId);
+create or replace trigger ins_complaints_instid_trg
+before insert on voxb_complaints
+for each row
+begin
+        if :new.offender_institutionId is null then
+                select institutionId
+                into :new.offender_institutionId
+                from voxb_institutions
+                where institutionname=:new.offender_institutionName;
+        end if;
+        if :new.offender_institutionName is null then
+                select institutionName
+                into :new.offender_institutionName
+                from voxb_institutions
+                where institutionId=:new.offender_institutionId;
+        end if;
+end;
+/
 

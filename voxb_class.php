@@ -782,7 +782,7 @@ class voxb extends webServiceServer {
       if (empty($where_clause)) {
         return self::_error(NO_ITEMS_OR_OBJECTS_TO_FETCH);
       }
-      $this->oci->set_query("select ITEMIDENTIFIERVALUE, USERID, OBJECTID, RATING, replace(to_char(creation_date, 'YYYY-MM-DD=HH24:MI:SS'), '=', 'T') || '+01:00' as CREATION_DATE from voxb_items i " .
+      $this->oci->set_query("select ITEMIDENTIFIERVALUE, USERID, OBJECTID, RATING, replace(to_char(creation_date, 'YYYY-MM-DD=HH24:MI:SS'), '=', 'T') || '+01:00' as CREATION_DATE, replace(to_char(modification_date, 'YYYY-MM-DD=HH24:MI:SS'), '=', 'T') || '+01:00' as MODIFICATION_DATE from voxb_items i " .
                       "where (" . implode(" OR ", $where_clause) . ") and disabled IS NULL");
       while ($data = $this->oci->fetch_into_assoc()) {
         if (isset($derived_oxid_id[$data['OBJECTID']])) {
@@ -1047,7 +1047,7 @@ class voxb extends webServiceServer {
     // Fetch items
     try {
       $this->oci->bind('userId', $userId);
-      $this->oci->set_query("SELECT ITEMIDENTIFIERVALUE, USERID, OBJECTID, RATING, replace(to_char(creation_date, 'YYYY-MM-DD=HH24:MI:SS'), '=', 'T') || '+01:00' as CREATION_DATE from voxb_items where userId=:userId and disabled IS NULL");
+      $this->oci->set_query("SELECT ITEMIDENTIFIERVALUE, USERID, OBJECTID, RATING, replace(to_char(creation_date, 'YYYY-MM-DD=HH24:MI:SS'), '=', 'T') || '+01:00' as CREATION_DATE, replace(to_char(modification_date, 'YYYY-MM-DD=HH24:MI:SS'), '=', 'T') || '+01:00' as MODIFICATION_DATE from voxb_items where userId=:userId and disabled IS NULL");
       while ($data = $this->oci->fetch_into_assoc()) {
         $item_data[$data['ITEMIDENTIFIERVALUE']] = $data;
       }
@@ -1111,6 +1111,7 @@ class voxb extends webServiceServer {
             $rResult->_namespace = $this->xmlns['voxb'];
             $this->_end_node($rResult, "voxbIdentifier", $item['ITEMIDENTIFIERVALUE']);
             $this->_end_node($rResult, "timestamp", $item['CREATION_DATE']);
+            $this->_end_node($rResult, "timestampModified", $item['MODIFICATION_DATE']);
             $rItem = &$rResult->_value->item;
             $rItem->_namespace = $this->xmlns['voxb'];
             // Ratings
@@ -1800,6 +1801,7 @@ class voxb extends webServiceServer {
       $this->log->add_p4(count($item['LOCALS']));
     }
     $this->_end_node($rUserItems, "timestamp", $item['CREATION_DATE']);
+    $this->_end_node($rUserItems, "timestampModified", $item['MODIFICATION_DATE']);
   }
 
 }

@@ -1,6 +1,23 @@
 --------------------------------------------------------
 --  File created - Wednesday-October-19-2011   
 --------------------------------------------------------
+  DROP TABLE "MKR"."VOXB_COMPLAINTS";
+  DROP TABLE "MKR"."VOXB_INSTITUTIONS";
+  DROP TABLE "MKR"."VOXB_ITEMS";
+  DROP TABLE "MKR"."VOXB_LOCALS";
+  DROP TABLE "MKR"."VOXB_LOGS";
+  DROP TABLE "MKR"."VOXB_OBJECTS";
+  DROP TABLE "MKR"."VOXB_REVIEWS";
+  DROP TABLE "MKR"."VOXB_TAGS";
+  DROP TABLE "MKR"."VOXB_USERS";
+  DROP SEQUENCE "MKR"."VOXB_COMPLAINTS_SEQ";
+  DROP SEQUENCE "MKR"."VOXB_ITEMS_SEQ";
+  DROP SEQUENCE "MKR"."VOXB_LOCALS_SEQ";
+  DROP SEQUENCE "MKR"."VOXB_LOGS_SEQ";
+  DROP SEQUENCE "MKR"."VOXB_OBJECTS_SEQ";
+  DROP SEQUENCE "MKR"."VOXB_REVIEWS_SEQ";
+  DROP SEQUENCE "MKR"."VOXB_TAGS_SEQ";
+  DROP SEQUENCE "MKR"."VOXB_USERS_SEQ";
 --------------------------------------------------------
 --  DDL for Sequence VOXB_COMPLAINTS_SEQ
 --------------------------------------------------------

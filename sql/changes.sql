@@ -79,5 +79,15 @@ begin
                 where institutionId=:new.offender_institutionId;
         end if;
 end;
+create or replace trigger ins_users_trg
+before insert on voxb_users
+for each row
+begin
+        if :new.institutionId is null then
+                select institutionId
+                into :new.institutionId
+                from voxb_institutions
+                where institutionname=:new.institutionName;
+        end if;
+end;
 /
-

@@ -1,46 +1,46 @@
 --------------------------------------------------------
---  File created - Friday-October-14-2011   
+--  File created - Wednesday-October-19-2011   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Sequence VOXB_COMPLAINTS_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "MKR"."VOXB_COMPLAINTS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "MKR"."VOXB_COMPLAINTS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 41 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence VOXB_ITEMS_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "MKR"."VOXB_ITEMS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 6927 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "MKR"."VOXB_ITEMS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 6947 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence VOXB_LOCALS_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "MKR"."VOXB_LOCALS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 220 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "MKR"."VOXB_LOCALS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 240 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence VOXB_LOGS_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "MKR"."VOXB_LOGS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 452649 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "MKR"."VOXB_LOGS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 452749 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence VOXB_OBJECTS_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "MKR"."VOXB_OBJECTS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 1633 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "MKR"."VOXB_OBJECTS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 1653 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence VOXB_REVIEWS_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "MKR"."VOXB_REVIEWS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 4042 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "MKR"."VOXB_REVIEWS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 4062 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence VOXB_TAGS_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "MKR"."VOXB_TAGS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 5280 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "MKR"."VOXB_TAGS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 5300 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence VOXB_USERS_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "MKR"."VOXB_USERS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 3515 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "MKR"."VOXB_USERS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 3535 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Table VOXB_COMPLAINTS
 --------------------------------------------------------
@@ -554,6 +554,23 @@ begin
 end;
 /
 ALTER TRIGGER "MKR"."INS_COMPLAINTS_INSTID_TRG" ENABLE;
+--------------------------------------------------------
+--  DDL for Trigger INS_USERS_TRG
+--------------------------------------------------------
+
+  CREATE OR REPLACE TRIGGER "MKR"."INS_USERS_TRG" 
+before insert on voxb_users
+for each row
+begin
+        if :new.institutionId is null then
+                select institutionId
+                into :new.institutionId
+                from voxb_institutions
+                where institutionname=:new.institutionName;
+        end if;
+end;
+/
+ALTER TRIGGER "MKR"."INS_USERS_TRG" ENABLE;
 --------------------------------------------------------
 --  DDL for Trigger VOXB_SEQ_COMPLAINTS
 --------------------------------------------------------

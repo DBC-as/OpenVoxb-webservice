@@ -90,4 +90,53 @@ begin
                 where institutionname=:new.institutionName;
         end if;
 end;
+alter table voxb_items add (newpk number);
+update voxb_items set newpk=to_number(itemidentifiervalue);
+alter table voxb_complaints drop constraint ref_com_itemid;
+alter table voxb_locals drop constraint ref_locals_items_id;
+alter table voxb_reviews drop constraint ref_reviews_items_id;
+alter table voxb_tags drop constraint ref_tag_id;
+alter table voxb_items drop constraint voxb_items_pk;
+alter table voxb_items drop column itemidentifiervalue;
+alter table voxb_items add (itemidentifiervalue number);
+update voxb_items set itemidentifiervalue=newpk;
+alter table voxb_items drop column newpk;
+alter table voxb_items modify (itemidentifiervalue not null);
+alter table voxb_items add constraint voxb_items_pk primary key (itemidentifiervalue);
+
+alter table voxb_complaints add (offitemidnumber number);
+update voxb_complaints set offitemidnumber=to_number(offending_itemid);
+alter table voxb_complaints drop column offending_itemid;
+alter table voxb_complaints add (offending_itemid number);
+update voxb_complaints set offending_itemid=offitemidnumber;
+alter table voxb_complaints modify (offending_itemid not null);
+alter table voxb_complaints drop column offitemidnumber;
+alter table voxb_complaints add constraint ref_com_itemid foreign key (offending_itemid) references voxb_items (itemidentifiervalue);
+
+alter table voxb_locals add (tmpnr number);
+update voxb_locals set tmpnr=itemid;
+alter table voxb_locals drop column itemid;
+alter table voxb_locals add (itemid number);
+update voxb_locals set itemid=tmpnr;
+alter table voxb_locals modify (itemid not null);
+alter table voxb_locals drop column tmpnr;
+alter table voxb_locals add constraint ref_locals_items_id foreign key (itemid) references voxb_items (itemidentifiervalue) on delete cascade;
+
+alter table voxb_reviews add (tmpnr number);
+update voxb_reviews set tmpnr=itemid;
+alter table voxb_reviews drop column itemid;
+alter table voxb_reviews add (itemid number);
+update voxb_reviews set itemid=tmpnr;
+alter table voxb_reviews modify (itemid not null);
+alter table voxb_reviews drop column tmpnr;
+alter table voxb_reviews add constraint ref_reviews_items_id foreign key (itemid) references voxb_items (itemidentifiervalue) on delete cascade;
+
+alter table voxb_tags add (tmpnr number);
+update voxb_tags set tmpnr=itemid;
+alter table voxb_tags drop column itemid;
+alter table voxb_tags add (itemid number);
+update voxb_tags set itemid=tmpnr;
+alter table voxb_tags modify (itemid not null);
+alter table voxb_tags drop column tmpnr;
+alter table voxb_tags add constraint ref_tag_id foreign key (itemid) references voxb_items (itemidentifiervalue) on delete cascade;
 /

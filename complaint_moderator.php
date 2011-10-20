@@ -15,6 +15,7 @@ $c=new voxb_complaints('voxb.ini');
 		echo "Brugeren og alle brugerens kommentarer blev slettet.";
 		$c->delete_offender($_GET['del_user'], $_GET['cid'], $_GET['c']);
 }
+/*
 $config=new inifile('voxb.ini');
 $oci = new oci($config->get_value('ocilogon'));
 $oci->set_charset('UTF8');
@@ -28,6 +29,6 @@ foreach($list as $k=>$v) {
 	}
 	echo "<HR>";	
 }
-
+*/
 
 ?>

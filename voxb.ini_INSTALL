@@ -120,3 +120,13 @@ action[deleteUser][] = userId
 
 [HowRU]
 __HOWRU__
+
+[complaint]
+cc=mkr@dbc.dk
+baseurl=https://voxb.addi.dk/trunk/complaint_moderator.php
+mail_title=<COMPLAINANT_ALIAS_NAME> har indgivet en klage over brugeren <OFFENDER_ALIAS_NAME>
+mail_body=<COMPLAINANT_ALIAS_NAME> har indgivet en klage over brugeren <OFFENDER_ALIAS_NAME><NEWLINE><NEWLINE>Titel: <OFFENDING_DATA_TITLE><NEWLINE>Tekst: <OFFENDING_DATA_DATA><NEWLINE>Tags: <OFFENDING_DATA_TAGS><NEWLINE>
+del_review=For at slette den kommentar der er klaget over tryk her
+ign_comp=For at ignorere klagen tryk her
+del_user=For at slette brugeren (inkl. samtlige af brugerens kommentarer) der er indgivet klage imod tryk her
+

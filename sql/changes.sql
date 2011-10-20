@@ -52,7 +52,8 @@ update voxb_institutions set institutionId=rownum;
 alter table voxb_institutions modify (institutionId not null);
 alter table voxb_users add (institutionId number(6));
 update voxb_users u set institutionId=(select institutionId from voxb_institutions where institutionname=u.institutionName);
---alter table voxb_users modify (institutionId number(6) not null);
+update voxb_users set institutionId=1 where institutionId IS NULL;
+alter table voxb_users modify (institutionId number(6) not null);
 alter table voxb_users drop constraint ref_users_id;
 alter table voxb_complaints drop constraint ref_off_institutionName;
 alter table voxb_institutions drop constraint voxb_ins_pk;
@@ -89,6 +90,12 @@ begin
                 from voxb_institutions
                 where institutionname=:new.institutionName;
         end if;
+       	if :new.institutionName is null then
+       	        select institutionName
+       	        into :new.institutionName
+       	        from voxb_institutions
+       	        where institutionId=:new.institutionId;
+       	end if; 
 end;
 alter table voxb_items add (newpk number);
 update voxb_items set newpk=to_number(itemidentifiervalue);

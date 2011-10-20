@@ -6,7 +6,7 @@
             <voxb:userIdentifierValue>0101</voxb:userIdentifierValue>
             <voxb:userIdentifierType>local</voxb:userIdentifierType>
             <voxb:identityProvider>KKB</voxb:identityProvider>
-            <voxb:institutionName>Københavns Kommunes Biblioteker</voxb:institutionName>
+            <voxb:institutionId>1</voxb:institutionId>
          </voxb:authenticationFingerprint>
       </voxb:fetchUserRequest>
    </soapenv:Body>

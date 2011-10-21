@@ -209,7 +209,7 @@
 	</xs:element>
 	<xs:element name="fetchDataRequest">
 		<xs:annotation>
-			<xs:documentation>retrieve user created data about one or more objects, using either an object identifier (faust, isbn, ean etc.) or a specific voxB item identifier.</xs:documentation>
+			<xs:documentation>retrieve user created data about one or more objects, using either an object identifier (FAUST, ISBN, LOCAL etc.) or a specific voxB item identifier.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>

@@ -1243,7 +1243,8 @@ class voxb extends webServiceServer {
           $userIdentifierValue = $aFv->userIdentifierValue->_value;
           $this->oci->bind("userIdentifierValue", $userIdentifierValue);
           $this->oci->bind("identityProvider", $aFv->identityProvider->_value);
-          $this->oci->set_query("SELECT * FROM voxb_users WHERE userIdentifierValue=:userIdentifierValue AND identityProvider=:identityProvider AND disabled IS NULL");
+          $this->oci->bind("institutionId", $aFv->institutionId->_value);
+          $this->oci->set_query("SELECT * FROM voxb_users WHERE identityProvider=:identityProvider AND userIdentifierValue=:userIdentifierValue AND institutionId=:institutionId AND disabled IS NULL");
           $data = $this->oci->fetch_all_into_assoc();
         } catch (ociException $e) {
           verbose::log(FATAL, "fetchUser(".__LINE__."):: OCI select error: " . $this->oci->get_error_string());

@@ -80,6 +80,7 @@ begin
                 where institutionId=:new.offender_institutionId;
         end if;
 end;
+/
 create or replace trigger ins_users_trg
 before insert on voxb_users
 for each row
@@ -90,13 +91,14 @@ begin
                 from voxb_institutions
                 where institutionname=:new.institutionName;
         end if;
-       	if :new.institutionName is null then
-       	        select institutionName
-       	        into :new.institutionName
-       	        from voxb_institutions
-       	        where institutionId=:new.institutionId;
-       	end if; 
+        if :new.institutionName is null then
+                select institutionName
+                into :new.institutionName
+                from voxb_institutions
+                where institutionId=:new.institutionId;
+        end if;
 end;
+/
 alter table voxb_items add (newpk number);
 update voxb_items set newpk=to_number(itemidentifiervalue);
 alter table voxb_complaints drop constraint ref_com_itemid;
@@ -146,4 +148,3 @@ update voxb_tags set itemid=tmpnr;
 alter table voxb_tags modify (itemid not null);
 alter table voxb_tags drop column tmpnr;
 alter table voxb_tags add constraint ref_tag_id foreign key (itemid) references voxb_items (itemidentifiervalue) on delete cascade;
-/

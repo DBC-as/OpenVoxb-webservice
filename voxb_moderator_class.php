@@ -116,7 +116,8 @@ class voxb_complaints {
 		$body.=$this->config->get_value('del_user','complaint').": $baseurl_del_user\n";
 
 		$body.="-----------------------------------------------------\n";
-		mail($to,$title,$body);
+		$headers .= 'From: Voxb complaint handler <noreply@voxbaddi.dk>' . "\r\n";
+		mail($to,$title,$body, $headers);
 		$this->set_status(COMPLAINT_STATUS_OPEN, $complaint_data['COMPLAINTID']);
 	}
 

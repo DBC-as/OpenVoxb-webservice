@@ -131,7 +131,7 @@ class voxb_complaints {
 
 	function delete_review($reviewid, $complaintid, $checksum) { 
 		if($checksum==$this->make_checksum($reviewid.$complaintid.'del_review')) {
-			echo "<br>update voxb_items set disabled=1 where ITEMIDENTIFIERVALUE=(SELECT itemid from voxb_reviews where reviewid=$reviewid)<br>";
+			#echo "<br>update voxb_items set disabled=1 where ITEMIDENTIFIERVALUE=(SELECT itemid from voxb_reviews where reviewid=$reviewid)<br>";
 			#echo "update voxb_complaints set status='".COMPLAINT_STATUS_ITEM_DISABLED."' where offending_itemid=(SELECT itemid from voxb_reviews where reviewid=$reviewid)<hr>";
 
    		$this->oci2->set_query("update voxb_items set disabled=1 where ITEMIDENTIFIERVALUE=(SELECT itemid from voxb_reviews where reviewid=$reviewid)");
@@ -145,9 +145,9 @@ class voxb_complaints {
 	function delete_offender($userid, $complaintid, $checksum) { 
 		$this->make_checksum($userid.'del_user');
 		if($checksum==$this->make_checksum($userid.$complaintid.'del_user')) {
-   		echo "<br>update voxb_users set disabled=1 where userid=$userid<br>";
+   		#echo "<br>update voxb_users set disabled=1 where userid=$userid<br>";
 			#echo "update voxb_complaints set status='".COMPLAINT_STATUS_USER_DISABLED."' where offender_userid=$userid and offending_itemid=(SELECT offending_itemid from voxb_complaints where complaintid=$complaintid)<br>";
-			echo "update voxb_items set disabled=1 where userid=$userid<hr>";
+			#echo "update voxb_items set disabled=1 where userid=$userid<hr>";
 
    		$this->oci2->set_query("update voxb_users set disabled=1 where userid=$userid");
    		#$this->oci2->set_query("update voxb_complaints set status='".COMPLAINT_STATUS_USER_DISABLED."' where offender_userid=$userid and offending_itemid=(SELECT offending_itemid from voxb_complaints where complaintid=$complaintid)");

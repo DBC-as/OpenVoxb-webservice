@@ -2,6 +2,7 @@
 
 require_once("./OLS_class_lib/webServiceServer_class.php");
 require_once("./OLS_class_lib/oci_class.php");
+require_once("./OLS_class_lib/material_id_class.php");
 
 require_once("voxb_constants.php");
 
@@ -277,6 +278,21 @@ class voxb extends webServiceServer {
       $object['MaterialType'] = str_replace("'", "''", strip_tags($params->object->_value->objectMaterialType->_value));
       $object['PublicationYear'] = str_replace("'", "''", strip_tags($params->object->_value->objectPublicationYear->_value));
     }
+
+    switch($object['IdentifierType']) {
+    			case "ISBN":
+            $object['IdentifierValue']=materialId::normalizeISBN($object['IdentifierValue']);
+          break;
+          case "ISSN":
+            $object['IdentifierValue']=materialId::normalizeISSN($object['IdentifierValue']);
+          break;
+          case "EAN":
+            $object['IdentifierValue']=materialId::normalizeEAN($object['IdentifierValue']);
+          break;
+          case "FAUST":
+            $object['IdentifierValue']=materialId::normalizeFAUST($object['IdentifierValue']);
+          break;
+        }
 
     // check userId exists
     try {
@@ -714,15 +730,39 @@ class voxb extends webServiceServer {
     $ilist = $olist = $openXIds = array();
     if (is_array($fetchData)) {
       foreach ($fetchData as $v) {
+				$objectIdentifierValue=$v->_value->voxbIdentifier->_value;
         if (isset($v->_value->voxbIdentifier->_value)) {
           // Requested data element is an item
           $ilist[] = $v->_value->voxbIdentifier->_value;
           $result[]['ITEM'] = $v->_value->voxbIdentifier->_value;
         } else {
+
+
+				$objectIdentifierValue=$v->_value->objectIdentifierValue->_value;
+
+
+				// Switch SKAL PILLES UD NAAR OPENXID ER I DRIFT
+				switch($v->_value->objectIdentifierType->_value) {
+					case "ISBN":
+						$objectIdentifierValue=materialId::normalizeISBN($objectIdentifierValue);
+					break;
+					case "ISSN":
+						$objectIdentifierValue=materialId::normalizeISSN($objectIdentifierValue);
+					break;
+					case "EAN":
+						$objectIdentifierValue=materialId::normalizeEAN($objectIdentifierValue);
+					break;
+					case "FAUST":
+						$objectIdentifierValue=materialId::normalizeFAUST($objectIdentifierValue);
+					break;
+				}
+				// Switch SKAL PILLES UD NAAR OPENXID ER I DRIFT
+
           // Requested data element is an object
-          $olist[] = "(OBJECTIDENTIFIERVALUE='" . $v->_value->objectIdentifierValue->_value . "' AND OBJECTIDENTIFIERTYPE='" . $v->_value->objectIdentifierType->_value . "')";
-          $openXIds[] = array('idType'=> $v->_value->objectIdentifierType->_value, 'idValue'=> $v->_value->objectIdentifierValue->_value);
-          $result[]['OBJECT'] = array("VALUE" => $v->_value->objectIdentifierValue->_value, "TYPE" => $v->_value->objectIdentifierType->_value);
+          $olist[] = "(OBJECTIDENTIFIERVALUE='" . $objectIdentifierValue . "' AND OBJECTIDENTIFIERTYPE='" . $v->_value->objectIdentifierType->_value . "')";
+          $openXIds[] = array('idType'=> $v->_value->objectIdentifierType->_value, 'idValue'=> $objectIdentifierValue);
+          $result[]['OBJECT'] = array("VALUE" => $objectIdentifierValue, "TYPE" => $v->_value->objectIdentifierType->_value);
+
         }
       }
     }

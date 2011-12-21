@@ -282,7 +282,7 @@ class voxb extends webServiceServer {
     switch($object['IdentifierType']) {
     			case "ISBN":
             $object['IdentifierValue']=materialId::normalizeISBN($object['IdentifierValue']);
-            $object['IdentifierValue']=materialId::convertISBNToEAN($object['IdentifierValue']);
+            //$object['IdentifierValue']=materialId::convertISBNToEAN($object['IdentifierValue']);
           break;
           case "ISSN":
             $object['IdentifierValue']=materialId::normalizeISSN($object['IdentifierValue']);
@@ -746,7 +746,7 @@ class voxb extends webServiceServer {
 				switch($v->_value->objectIdentifierType->_value) {
 					case "ISBN":
 						$objectIdentifierValue=materialId::normalizeISBN($objectIdentifierValue);
-						$objectIdentifierValue=materialId::convertISBNToEAN($objectIdentifierValue);
+						//$objectIdentifierValue=materialId::convertISBNToEAN($objectIdentifierValue);
 					break;
 					case "ISSN":
 						$objectIdentifierValue=materialId::normalizeISSN($objectIdentifierValue);

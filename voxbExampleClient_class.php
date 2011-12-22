@@ -37,60 +37,60 @@ class voxbExampleClient extends webServiceClientUtils {
 		return $this->send_request($rn, $this->request_action);
 	}
 
-	function extractData($obj, &$data) {
+	function extractData($obj, &$data, &$key=null) {
    foreach ($obj as $k=>$v) {
-			if(is_string($k) && ($k=="aliasName" || $k=="averageRating" || $k=="rating" || $k=="reviewData" || $k=="reviewTitle")) {
-        $data[$k][]=$v->_value;
-      }
+			if (is_string($k)) {
+				if($k=="objectIdentifierValue" || $k=="objectIdentifierType") {
+      	 	$data["objectInfo"][$k]=$v->_value;
+				}
+				if($k=="ratingSummary") {
+					break;
+				}
+				if($k=="aliasName") {
+					 $key=$v->_value;
+				}
+				if(($k=="averageRating" || $k=="rating" || $k=="reviewData" || $k=="reviewTitle" || $k=="timestamp")) {
+ 	      	$data["userItems"][$key][$k]=$v->_value;
+ 	     	}
+				if(($k=="tag")) {
+ 	      	$data["userItems"][$key][$k][]=$v->_value;
+ 	     	}
+			}
+
       if(is_object($v) || is_array($v)) {
-        $this->extractData($v, $data);
+        $this->extractData($v, $data, $key);
       }
     }
 		return $data;
 	}
 
-	function makeDisplayData($data) {
-		if(is_array($data["rating"]))
-			array_shift($data["rating"]);
-		foreach($data["aliasName"] as $k=>$v) {
-			$displaydata[$k]["aliasName"]=$v;
-			$displaydata[$k]["rating"]=$data["rating"][$k];
-			$displaydata[$k]["reviewTitle"]=$data["reviewTitle"][$k];
-			$displaydata[$k]["reviewData"]=$data["reviewData"][$k];
-			if(
-				empty($data["rating"][$k]) && empty($data["reviewTitle"][$k]) && empty($data["reviewData"][$k]) ) {
-				unset($displaydata[$k]);
-			} 
-		}
-		return($displaydata);
-	}
 
 	function displayData($obj) {
 		echo "<pre>";
 		$data=array();
 		$data=$this->extractData($obj, $data);
-		$displaydata=$this->makeDisplayData($data);
 		
-		foreach($displaydata as $k=>$v) {
-			echo $v["aliasName"];
-			echo "<br>";
-			if(!empty($v["rating"])) {
-				echo "rating: ";
-				echo $v["rating"];
+		foreach($data["userItems"] as $k=>$v) {
+			if(count($v)>1) {
+				echo "<b>".$k."</b>";
 				echo "<br>";
-			}
-			if(!empty($v["reviewTitle"])) {
-				echo "review titel: ";
-				echo $v["reviewTitle"];
-				echo "<br>";
-			}
-			if(!empty($v["reviewData"])) {
-				echo "review: ";
-				echo $v["reviewData"];
-				echo "<br>";
-			}
-			echo "<hr>";
-		
+				if(!empty($v["rating"])) {
+					echo "rating: ";
+					echo $v["rating"];
+					echo "<br>";
+				}
+				if(!empty($v["reviewTitle"])) {
+					echo "review titel: ";
+					echo $v["reviewTitle"];
+					echo "<br>";
+				}
+				if(!empty($v["reviewData"])) {
+					echo "review: ";
+					echo $v["reviewData"];
+					echo "<br>";
+				}
+				echo "<hr>";
+			}	
 		}
 	}
 	
@@ -133,8 +133,6 @@ if(isset($_POST["fetchDataRequest"])) {
 	}
 }
 
-
-//$obj->Envelope->_value->Body->_value->createMyDataRequest->_value->userId
 
 echo $client->footer();
 

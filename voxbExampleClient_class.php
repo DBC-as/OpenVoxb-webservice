@@ -108,7 +108,7 @@ class voxbExampleClient extends webServiceClientUtils {
 		echo "<OPTION VALUE='ISBN'>ISBN</OPTION>\n";
 		echo "<OPTION VALUE='FAUST'>FAUST</OPTION>\n";
 		echo "</SELECT>\n";
-		echo "<br>objectIdentifierValue: <INPUT TYPE='TEXT' NAME='objectIdentifierValue'>\n";
+		echo "objectIdentifierValue: <INPUT TYPE='TEXT' NAME='objectIdentifierValue'>\n";
 		echo "<input type='SUBMIT' NAME='fetchDataRequest' value='fetchDataRequest'>";
 		echo "</FORM>";
 	}

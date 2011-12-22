@@ -4,7 +4,7 @@ require_once('OLS_class_lib/webServiceClientUtils_class.php');
 class voxbExampleClient extends webServiceClientUtils {
 
 
-	public function createMyDataRequest($userId, $rating, $objectContributors, $objectIdentifierValue, $objectIdentifierType, $objectMaterialType, $objectPublicationYear, $objectTitle) {
+	public function createMyDataRequest($userId, $rating, $tags, $objectContributors, $objectIdentifierValue, $objectIdentifierType, $objectMaterialType, $objectPublicationYear, $objectTitle) {
 		$rn="createMyDataRequest";
 		$this->load_request($rn);
 		$req_obj=&$this->get_request_object($rn);
@@ -18,7 +18,11 @@ class voxbExampleClient extends webServiceClientUtils {
 		$this->change_tag_value($req_obj, "objectPublicationYear", $objectPublicationYear);
 		$this->change_tag_value($req_obj, "objectTitle", $objectTitle);
 		$this->delete_tag($req_obj, "local");
-
+		$this->delete_tag($req_obj, "tag");
+		foreach($tags as $k=>$v) {
+			$this->insert_tag($req_obj, "tags","tag", $v, "http://oss.dbc.dk/ns/voxb");
+		}	
+		
 		return $this->send_request($rn, $this->request_action);
 	}
 
@@ -65,7 +69,7 @@ class voxbExampleClient extends webServiceClientUtils {
 
 $vEC=new voxbExampleClient("xml/request/");
 $vEC->set_request_action("http://metode.dbc.dk/~mkr/OpenVoxb/trunk/");
-//$xml=$vEC->createMyDataRequest(275,100,"Forfatter", 11111111111111, "ISBN", "Bog", 1900, "titel");
+//$xml=$vEC->createMyDataRequest(275,100,array('A', 'B'),"Forfatter", 11111111111111, "ISBN", "Bog", 1900, "titel");
 //echo $vEC->check_error($vEC->xmlconvert->soap2obj($xml));
 //echo $vEC->fetchDataRequest("11111111111111", "ISBN", "DK-100450", 790900);
 $vEC->displayFetchForm();

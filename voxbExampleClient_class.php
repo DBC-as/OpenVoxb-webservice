@@ -37,7 +37,7 @@ class voxbExampleClient extends webServiceClientUtils {
 		return $this->send_request($rn, $this->request_action);
 	}
 
-	function extractData($obj, &$data, &$key=null) {
+	function extractData($obj, &$data, &$key="test") {
    foreach ($obj as $k=>$v) {
 			if (is_string($k)) {
 				if($k=="objectIdentifierValue" || $k=="objectIdentifierType") {
@@ -52,8 +52,8 @@ class voxbExampleClient extends webServiceClientUtils {
 				if(($k=="averageRating" || $k=="rating" || $k=="reviewData" || $k=="reviewTitle" || $k=="timestamp")) {
  	      	$data["userItems"][$key][$k]=$v->_value;
  	     	}
-				if(($k=="tag")) {
- 	      	$data["userItems"][$key][$k][]=$v->_value;
+				if(($k=="tag") && !empty($v->_value)) {
+ 	      	$data[$k][]=$v->_value;
  	     	}
 			}
 
@@ -69,7 +69,13 @@ class voxbExampleClient extends webServiceClientUtils {
 		echo "<pre>";
 		$data=array();
 		$data=$this->extractData($obj, $data);
-		
+		//print_r($data);
+
+		echo "<h3>";	
+		echo $data["objectInfo"]["objectIdentifierType"].": ".$data["objectInfo"]["objectIdentifierValue"];
+		echo "</h3>";	
+		echo "tags: ".implode($data["tag"], ", ");
+		echo "<P>";
 		foreach($data["userItems"] as $k=>$v) {
 			if(count($v)>1) {
 				echo "<b>".$k."</b>";

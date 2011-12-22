@@ -74,8 +74,10 @@ class voxbExampleClient extends webServiceClientUtils {
 		echo "<h3>";	
 		echo $data["objectInfo"]["objectIdentifierType"].": ".$data["objectInfo"]["objectIdentifierValue"];
 		echo "</h3>";	
-		echo "tags: ".implode($data["tag"], ", ");
-		echo "<P>";
+		if(isset($data["tag"]))	{
+			echo "tags: ".implode($data["tag"], ", ");
+			echo "<P>";
+		}
 		foreach($data["userItems"] as $k=>$v) {
 			if(count($v)>1) {
 				echo "<b>".$k."</b>";

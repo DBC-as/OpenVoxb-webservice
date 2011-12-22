@@ -114,6 +114,7 @@ class voxbExampleClient extends webServiceClientUtils {
 	}
 
 	function header() {
+		header('Content-Type:text/html; charset=UTF-8');
 		return "<HTML>\n<BODY>";
 	}
 

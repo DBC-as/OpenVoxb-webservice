@@ -19,9 +19,12 @@ class voxbExampleClient extends webServiceClientUtils {
 		$this->change_tag_value($req_obj, "objectTitle", $objectTitle);
 		$this->delete_tag($req_obj, "local");
 		$this->delete_tag($req_obj, "tag");
-		foreach($tags as $k=>$v) {
-			$this->insert_tag($req_obj, "tags","tag", $v, "http://oss.dbc.dk/ns/voxb");
-		}	
+
+		if(is_array($tags)) {
+			foreach($tags as $k=>$v) {
+				$this->insert_tag($req_obj, "tags","tag", $v, "http://oss.dbc.dk/ns/voxb");
+			}	
+		}
 		
 		return $this->send_request($rn, $this->request_action);
 	}
@@ -101,16 +104,45 @@ class voxbExampleClient extends webServiceClientUtils {
 			}	
 		}
 	}
+
+	function displayInputForm() {
+		echo "<TABLE>";
+		echo "<tr><td><h3>Insert data</h3></td></tr>";
+		echo "<FORM METHOD='POST'>";
+   	echo "<tr><td>objectIdentifierType:</td><td><SELECT NAME='objectIdentifierType'>\n";
+    echo "<OPTION VALUE='ISBN'>ISBN</OPTION>\n";
+    echo "<OPTION VALUE='FAUST'>FAUST</OPTION>\n";
+    echo "</SELECT><td></tr>\n";
+    echo "<tr><td>objectIdentifierValue:</td><td><INPUT TYPE='TEXT' NAME='objectIdentifierValue'><td></tr>\n";
+
+
+   	echo "<tr><td>objectMaterialType:</td><td><SELECT NAME='objectIdentifierType'>\n";
+    echo "<OPTION VALUE='Bog'>Bog</OPTION>\n";
+    echo "</SELECT><td></tr>\n";
+
+    echo "<tr><td>objectContributors (name1, name2, etc):</td><td><INPUT TYPE='TEXT' NAME='objectContributors'><td></tr>\n";
+    echo "<tr><td>objectPublicationYear:</td><td><INPUT TYPE='TEXT' SIZE='4' MAXLENGTH='4' NAME='objectPublicationYear'><td></tr>\n";
+    echo "<tr><td>objectTitle:</td><td><INPUT TYPE='TEXT' NAME='objectTitle'><td></tr>\n";
+    echo "<tr><td>ratingValue (min 0 max 100):</td><td><INPUT TYPE='TEXT' SIZE='3' NAME='ratingValue'><td></tr>\n";
+    echo "<tr><td valign='top'>reviewText:</td><td><TEXTAREA COLS=56 rows=20 NAME='reviewData'></TEXTAREA><td></tr>\n";
+    echo "<tr><td>Tags (tag1,tag2,tag3,etc):</td><td><INPUT TYPE='TEXT' SIZE='50' NAME='tags'><td></tr>\n";
+    echo "<tr><td><input type='SUBMIT' NAME='createDataRequest' value='createDataRequest'></td></tr>";
+
+		echo "</FORM>";
+		echo "</TABLE>";
+		echo "<HR>";
+		
+	}
 	
 	function displayFetchForm() {
-		echo "<FORM METHOD='POST'>";
+		echo "<h3>Fetch data</h3><FORM METHOD='POST'>";
 		echo "objectIdentifierType: <SELECT NAME='objectIdentifierType'>\n";
 		echo "<OPTION VALUE='ISBN'>ISBN</OPTION>\n";
 		echo "<OPTION VALUE='FAUST'>FAUST</OPTION>\n";
 		echo "</SELECT>\n";
 		echo "objectIdentifierValue: <INPUT TYPE='TEXT' NAME='objectIdentifierValue'>\n";
 		echo "<input type='SUBMIT' NAME='fetchDataRequest' value='fetchDataRequest'>";
-		echo "</FORM>";
+		echo "</FORM><HR>";
 	}
 
 	function header() {
@@ -130,18 +162,38 @@ $client->set_request_action("http://metode.dbc.dk/~mkr/OpenVoxb/trunk/");
 //$xml=$client->createMyDataRequest(275,100,array('A', 'B'),"Forfatter", 11111111111111, "ISBN", "Bog", 1900, "titel");
 //echo $client->check_error($client->xmlconvert->soap2obj($xml));
 //echo $client->fetchDataRequest("11111111111111", "ISBN", "DK-100450", 790900);
-$client->displayFetchForm();
+
+if(isset($_GET['displayInputForm'])) {
+	echo "<a href='?displayFetchForm'>Fetch data</a><hr>";
+	$client->displayInputForm();
+
+} else {
+	echo "<a href='?displayInputForm'>Insert data</a><hr>";
+	$client->displayFetchForm();
+}
 
 if(isset($_POST["fetchDataRequest"])) {
 	$xml=$client->fetchDataRequest($_POST["objectIdentifierValue"], $_POST["objectIdentifierType"]);
 	$obj=$client->xmlconvert->soap2obj($xml);
  	if($client->check_error($obj)) {
-		echo "Could not find any items...";
+		echo "ERROR: Could not find any items...";
 	} else {
 		$client->displayData($obj);
 	}
 }
 
+if(isset($_POST["createDataRequest"])) {
+	if(!empty($_POST['tags'])) {
+		$tags=explode(','.$_POST['tags']);
+	}
+	$xml=$client->createMyDataRequest(275,$_POST['ratingValue'],$tags,$_POST['objectContributors'], $_POST['objectIdentifierValue'], $_POST['objectIdentifierType'], $_POST['objectMaterialType'], $_POST['objectPublicationYear'], $_POST['objectTitle']);
+	$obj=$client->xmlconvert->soap2obj($xml);
+ 	if($client->check_error($obj)) {
+		echo "ERROR: Could not create data...";
+	} else {
+		echo "Data was inserted...";
+	}
+}
 
 echo $client->footer();
 

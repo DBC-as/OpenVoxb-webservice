@@ -72,7 +72,6 @@ class voxbExampleClient extends webServiceClientUtils {
 		echo "<pre>";
 		$data=array();
 		$data=$this->extractData($obj, $data);
-		//print_r($data);
 
 		echo "<h3>";	
 		echo $data["objectInfo"]["objectIdentifierType"].": ".$data["objectInfo"]["objectIdentifierValue"];
@@ -176,7 +175,7 @@ if(isset($_POST["fetchDataRequest"])) {
 	$xml=$client->fetchDataRequest($_POST["objectIdentifierValue"], $_POST["objectIdentifierType"]);
 	$obj=$client->xmlconvert->soap2obj($xml);
  	if($client->check_error($obj)) {
-		echo "ERROR: Could not find any items...";
+		echo $xml;
 	} else {
 		$client->displayData($obj);
 	}
@@ -184,12 +183,12 @@ if(isset($_POST["fetchDataRequest"])) {
 
 if(isset($_POST["createDataRequest"])) {
 	if(!empty($_POST['tags'])) {
-		$tags=explode(','.$_POST['tags']);
+		$tags=explode(',',$_POST['tags']);
 	}
 	$xml=$client->createMyDataRequest(275,$_POST['ratingValue'],$tags,$_POST['objectContributors'], $_POST['objectIdentifierValue'], $_POST['objectIdentifierType'], $_POST['objectMaterialType'], $_POST['objectPublicationYear'], $_POST['objectTitle']);
 	$obj=$client->xmlconvert->soap2obj($xml);
  	if($client->check_error($obj)) {
-		echo "ERROR: Could not create data...";
+	echo $xml;
 	} else {
 		echo "Data was inserted...";
 	}

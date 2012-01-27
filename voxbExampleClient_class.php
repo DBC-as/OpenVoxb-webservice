@@ -155,45 +155,4 @@ class voxbExampleClient extends webServiceClientUtils {
 
 }
 
-$client=new voxbExampleClient("xml/request/");
-echo $client->header();
-$client->set_request_action("http://metode.dbc.dk/~mkr/OpenVoxb/trunk/");
-//$xml=$client->createMyDataRequest(275,100,array('A', 'B'),"Forfatter", 11111111111111, "ISBN", "Bog", 1900, "titel");
-//echo $client->check_error($client->xmlconvert->soap2obj($xml));
-//echo $client->fetchDataRequest("11111111111111", "ISBN", "DK-100450", 790900);
-
-if(isset($_GET['displayInputForm'])) {
-	echo "<a href='?displayFetchForm'>Fetch data</a><hr>";
-	$client->displayInputForm();
-
-} else {
-	echo "<a href='?displayInputForm'>Insert data</a><hr>";
-	$client->displayFetchForm();
-}
-
-if(isset($_POST["fetchDataRequest"])) {
-	$xml=$client->fetchDataRequest($_POST["objectIdentifierValue"], $_POST["objectIdentifierType"]);
-	$obj=$client->xmlconvert->soap2obj($xml);
- 	if($client->check_error($obj)) {
-		echo $xml;
-	} else {
-		$client->displayData($obj);
-	}
-}
-
-if(isset($_POST["createDataRequest"])) {
-	if(!empty($_POST['tags'])) {
-		$tags=explode(',',$_POST['tags']);
-	}
-	$xml=$client->createMyDataRequest(275,$_POST['ratingValue'],$tags,$_POST['objectContributors'], $_POST['objectIdentifierValue'], $_POST['objectIdentifierType'], $_POST['objectMaterialType'], $_POST['objectPublicationYear'], $_POST['objectTitle']);
-	$obj=$client->xmlconvert->soap2obj($xml);
- 	if($client->check_error($obj)) {
-	echo $xml;
-	} else {
-		echo "Data was inserted...";
-	}
-}
-
-echo $client->footer();
-
 ?>

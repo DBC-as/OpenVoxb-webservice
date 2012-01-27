@@ -1,5 +1,5 @@
 <?php
-require_once('OLS_class_lib/voxbExampleClient_class.php');
+require_once('voxbExampleClient_class.php');
 
 //config
 define(VOXB_URL,"http://metode.dbc.dk/~mkr/OpenVoxb/trunk/");

@@ -96,7 +96,6 @@ aaa_credentials = some_user/some_pwd@some.server.dbc.dk
 
 
 [rest]
-;
 ; use xml.path.to.par notation to solve name-conflicts
 ; action[thisSoapAction][foo][] = some.number
 ; action[thisSoapAction][bar][] = another.number
@@ -112,14 +111,16 @@ aaa_credentials = some_user/some_pwd@some.server.dbc.dk
 ; from url: action=thisSoapAction&some.number=nn&another.number=mm
 ;
 ; action[ALL] defines parameter used in all defined soap-actions
-;
-action[ALL][] = outputType
-action[ALL][] = callback
 
-action[deleteUser][] = userId
+; rest operation - used in howru-section
+soap_header = <?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?><SOAP-EN
+V:Envelope xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns=&quot;http://oss.dbc.dk/ns/voxb&quot;><SOAP-ENV:Body>
 
-[HowRU]
-__HOWRU__
+soap_footer = </SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+action[fetchData][fetchData][] = voxbIdentifier
+action[fetchData][output][] = contentType
 
 [complaint]
 cc=mkr@dbc.dk
@@ -130,3 +131,7 @@ del_review=For at slette den kommentar der er klaget over tryk her
 ign_comp=For at ignorere klagen tryk her
 del_user=For at slette brugeren (inkl. samtlige af brugerens kommentarer) der er indgivet klage imod tryk her
 
+[howru]
+test[] = fetchData&voxbIdentifier=7327&contentType=all
+preg_match[] = fetchDataResponse
+error[] = ERROR error fetching Voxb data

@@ -102,13 +102,8 @@ class voxb_logger {
     if (empty($this->caller->oci)) {
       verbose::log(FATAL, "Voxb Error $this->error in $this->method, $elapsed");
     } else {
-      try {
-        $this->caller->oci->set_query("INSERT INTO voxb_logs (method, userid, p1, p2, p3, p4, p5, p6, p7, text, error, duration) " .
-                                      "VALUES ('$this->method', $this->userId, $this->p1, $this->p2, $this->p3, $this->p4, $this->p5, $this->p6, $this->p7, '$this->text', $this->error, $elapsed)");
-        $this->caller->oci->commit();
-      } catch (ociException $e) {
-        verbose::log(FATAL, "log(".__LINE__."):: OCI insert voxb_log error: " . $this->caller->oci->get_error_string());
-      }
+			$logline="method:".$this->method."userId:".$this->userId." p1:".$this->p1." p2:".$this->p2." p3:".$this->p3." p4:".$this->p4." p5:".$this->p5." p6:".$this->p6." p7:".$this->p7." text:".$this->text." error:".$this->error." elapsed:".$elapsed;
+      verbose::log(STAT, $logline);
     }
   }
 
@@ -527,7 +522,7 @@ class voxb extends webServiceServer {
     return $this->_epilog($this->response);
   }
 
-
+#
 
   /** undeleteMyData
    *

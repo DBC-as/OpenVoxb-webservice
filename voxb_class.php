@@ -147,8 +147,8 @@ class openXidWrapper {
     $getIdsRequest = $soapBody->appendChild($requestDom->createElement('xid:getIdsRequest'));
     if (is_array($requestedIds)) foreach ($requestedIds as $requestedId) {
       $id = $getIdsRequest->appendChild($requestDom->createElement('xid:id'));
-      if (strtolower($requestedId['idType']) == 'isbn') $requestedId['idType'] = 'EAN';    // Convert from isbn to EAN
-      $id->appendChild($requestDom->createElement('xid:idType', $requestedId['idType']));
+      if (strtolower($requestedId['idType']) == 'isbn') $requestedId['idType'] = 'ean';    // Convert from isbn to EAN
+      $id->appendChild($requestDom->createElement('xid:idType', strtolower($requestedId['idType'])));
       $id->appendChild($requestDom->createElement('xid:idValue', $requestedId['idValue']));
     }
     return $requestDom->saveXML();
@@ -738,6 +738,7 @@ class voxb extends webServiceServer {
 
 
 				// Switch SKAL MAASKE PILLES UD NAAR OPENXID ER I DRIFT
+				/*
 				switch($v->_value->objectIdentifierType->_value) {
 					case "ISBN":
 						$objectIdentifierValue=materialId::normalizeISBN($objectIdentifierValue);
@@ -753,6 +754,7 @@ class voxb extends webServiceServer {
 						$objectIdentifierValue=materialId::normalizeFAUST($objectIdentifierValue);
 					break;
 				}
+				*/
 				// Switch SKAL MAASKE PILLES UD NAAR OPENXID ER I DRIFT
 
           // Requested data element is an object
@@ -774,20 +776,27 @@ class voxb extends webServiceServer {
             $oxidIds[] = array('requestedId'=>$match['requestedId'], 'id'=>$match['ids']['id']);
             foreach ($match['ids']['id'] as $m) {
               $oxid_list[] = "(OBJECTIDENTIFIERVALUE='{$m['idValue']}' AND OBJECTIDENTIFIERTYPE='" . strtoupper($m['idType']) . "')";
+          		$objects_by_id[strtoupper($m['idType']).$m['idValue']] = &$object_data[$data['OBJECTID']];
+							$objects_by_id[strtoupper($m['idType']).$m['idValue']]='';
             }
           }
         }
       }
     }
-
     // Fetch object data
     if (!empty($olist)) {
       try {
         $this->oci->set_query("SELECT distinct * FROM voxb_objects WHERE " . implode(" OR ", array_merge($olist, $oxid_list)));
         while ($data = $this->oci->fetch_into_assoc()) {
           $object_data[$data['OBJECTID']] = $data;
-          $objects_by_id[$data['OBJECTIDENTIFIERTYPE'] . $data['OBJECTIDENTIFIERVALUE']] = &$object_data[$data['OBJECTID']];
+					$tv=$data['OBJECTIDENTIFIERTYPE'] . $data['OBJECTIDENTIFIERVALUE'];
+          $objects_by_id[$tv] = &$object_data[$data['OBJECTID']];
         }
+				foreach($objects_by_id as $k=>$v) {
+					if($k!=$tv) {
+						$objects_by_id[$k]=&$objects_by_id[$tv];
+					}
+				}
       }
       catch (ociException $e) {
         verbose::log(FATAL, "fetchData(".__LINE__."):: OCI select error: " . $this->oci->get_error_string());
@@ -945,6 +954,7 @@ class voxb extends webServiceServer {
       }
       unset($oData);
     }
+
 
     // Now prepare output data
     if (is_array($result)) {

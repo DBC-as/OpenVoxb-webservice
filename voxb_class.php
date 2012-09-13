@@ -737,8 +737,6 @@ class voxb extends webServiceServer {
 				$objectIdentifierValue=$v->_value->objectIdentifierValue->_value;
 
 
-				// Switch SKAL MAASKE PILLES UD NAAR OPENXID ER I DRIFT
-				/*
 				switch($v->_value->objectIdentifierType->_value) {
 					case "ISBN":
 						$objectIdentifierValue=materialId::normalizeISBN($objectIdentifierValue);
@@ -754,8 +752,6 @@ class voxb extends webServiceServer {
 						$objectIdentifierValue=materialId::normalizeFAUST($objectIdentifierValue);
 					break;
 				}
-				*/
-				// Switch SKAL MAASKE PILLES UD NAAR OPENXID ER I DRIFT
 
           // Requested data element is an object
           $olist[] = "(OBJECTIDENTIFIERVALUE='" . $objectIdentifierValue . "' AND OBJECTIDENTIFIERTYPE='" . $v->_value->objectIdentifierType->_value . "')";

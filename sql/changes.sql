@@ -148,3 +148,4 @@ update voxb_tags set itemid=tmpnr;
 alter table voxb_tags modify (itemid not null);
 alter table voxb_tags drop column tmpnr;
 alter table voxb_tags add constraint ref_tag_id foreign key (itemid) references voxb_items (itemidentifiervalue) on delete cascade;
+alter table voxb_objects modify(OBJECTCONTRIBUTORS varchar(512));

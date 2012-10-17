@@ -1,0 +1,17 @@
+Instrukser for installation.
+
+Filer der skal benyttes til installation:
+https://svn.dbc.dk/repos/php/OpenLibrary/OpenVoxb/trunk/import_from_ucd.php
+https://svn.dbc.dk/repos/php/OpenLibrary/OpenVoxb/trunk/voxb.ini_INSTALL
+
+I voxb.ini er det ucdlogon der skal tilfoejes, den benytter altsaa voxb.ini til config.
+
+For at koere scriptet:
+php import_from_ucd.php > import_from_ucd.log
+
+Script skal boer i cron mindst 1 gang i timen.
+
+Der skal fra server vaere adgang til:
+voxb drift tabeller i oracle
+ucd drift tabeller i oracle (brugerskabt data bibliotek.dk)
+voxb webservice kald paa addi.

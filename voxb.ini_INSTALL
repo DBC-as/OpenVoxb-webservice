@@ -6,6 +6,7 @@ version = Trunk
 
 xmldir = ./xml
 
+ucdlogon = some_user/some_pwd@some.server.dbc.dk
 ocilogon = some_user/some_pwd@some.server.dbc.dk
 
 ; Salt key - do not change this value - this is a secret key - do not make public

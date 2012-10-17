@@ -7,7 +7,7 @@ require_once('OLS_class_lib/verbose_class.php');
 require_once('OLS_class_lib/material_id_class.php');
 require_once('OLS_class_lib/inifile_class.php');
 
-verbose::open('oracle.log', WARNING+FATAL+OCI+ERROR);
+verbose::open($this->config->get_value('logfile', 'setup'), $this->config->get_value('verbose', 'setup'));
 
 // initialize config 
 @$config = new inifile('voxb.ini');

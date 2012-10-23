@@ -1,5 +1,8 @@
 Instrukser for installation.
 
+Husk at koere en ALTER paa tabellen voxb_objects
+alter table voxb_objects modify(OBJECTCONTRIBUTORS varchar(255));
+
 Filer der skal benyttes til installation:
 https://svn.dbc.dk/repos/php/OpenLibrary/OpenVoxb/trunk/import_from_ucd.php
 https://svn.dbc.dk/repos/php/OpenLibrary/OpenVoxb/trunk/voxb.ini_INSTALL

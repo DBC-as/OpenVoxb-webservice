@@ -87,7 +87,7 @@ function check_existing_item($id,$idtype, $userid) {
 	$oci_voxb->bind("objectidentifiertype",$idtype);
 	$oci_voxb->bind("userid",$userid);
   #echo $q="select reviewid from voxb_reviews where itemid=(select itemidentifiervalue from voxb_items where objectid=(select objectid from voxb_objects where objectidentifiervalue=:objectidentifiervalue AND objectidentifiertype=:objectidentifiertype))";
-  $q="select itemidentifiervalue from voxb_items where objectid=(select distinct objectid from voxb_objects where objectidentifiervalue=:objectidentifiervalue AND objectidentifiertype=:objectidentifiertype) AND userid=:userid";
+  $q="select itemidentifiervalue from voxb_items where objectid IN (select distinct objectid from voxb_objects where objectidentifiervalue=:objectidentifiervalue AND objectidentifiertype=:objectidentifiertype) AND userid=:userid";
   $oci_voxb->set_query($q);
   $result=$oci_voxb->fetch_all_into_assoc();
   if(!$result[0]['ITEMIDENTIFIERVALUE']) {

@@ -3,6 +3,7 @@
    <soapenv:Body>
       <voxb:createMyDataRequest>
          <voxb:userId>31</voxb:userId>
+         <voxb:institutionId>1</voxb:institutionId>
          <voxb:item>
             <!--Optional:-->
             <voxb:rating>77</voxb:rating>

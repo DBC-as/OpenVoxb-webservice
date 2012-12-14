@@ -6,6 +6,7 @@
          <voxb:fetchData>
             <voxb:objectIdentifierValue>9788776905774</voxb:objectIdentifierValue>
             <voxb:objectIdentifierType>ISBN</voxb:objectIdentifierType>
+            <voxb:institutionId>1</voxb:institutionId>
          </voxb:fetchData>
          <voxb:output>
             <!--1 or more repetitions:-->

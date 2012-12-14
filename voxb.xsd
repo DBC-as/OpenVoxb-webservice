@@ -30,8 +30,8 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:institutionId"/>
 				<xs:element ref="voxb:userAlias"/>
-				<xs:element ref="voxb:authenticationFingerprint"/>
 				<xs:element ref="voxb:callback" minOccurs="0"/>
 				<xs:element ref="voxb:outputType" minOccurs="0"/>
 			</xs:sequence>
@@ -52,6 +52,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:institutionId"/>
 				<xs:element ref="voxb:callback" minOccurs="0"/>
 				<xs:element ref="voxb:outputType" minOccurs="0"/>
 			</xs:sequence>
@@ -69,6 +70,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:institutionId"/>
 				<xs:element ref="voxb:callback" minOccurs="0"/>
 				<xs:element ref="voxb:outputType" minOccurs="0"/>
 			</xs:sequence>
@@ -114,6 +116,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="voxb:userId"/>
+				<xs:element ref="voxb:institutionId"/>
 				<xs:element ref="voxb:item"/>
 				<xs:element ref="voxb:object"/>
 				<xs:element ref="voxb:callback" minOccurs="0"/>
@@ -136,6 +139,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="voxb:voxbIdentifier"/>
+				<xs:element ref="voxb:institutionId"/>
 				<xs:element ref="voxb:item"/>
 				<xs:element ref="voxb:object" minOccurs="0"/>
 				<xs:element ref="voxb:callback" minOccurs="0"/>
@@ -155,6 +159,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="voxb:voxbIdentifier"/>
+				<xs:element ref="voxb:institutionId"/>
 				<xs:element ref="voxb:item" minOccurs="0"/>
 				<xs:element ref="voxb:object" minOccurs="0"/>
 				<xs:element ref="voxb:callback" minOccurs="0"/>
@@ -174,6 +179,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="voxb:voxbIdentifier"/>
+				<xs:element ref="voxb:institutionId"/>
 				<xs:element ref="voxb:callback" minOccurs="0"/>
 				<xs:element ref="voxb:outputType" minOccurs="0"/>
 			</xs:sequence>
@@ -321,6 +327,7 @@
 				<xs:sequence>
 					<xs:element ref="voxb:objectIdentifierValue"/>
 					<xs:element ref="voxb:objectIdentifierType"/>
+					<xs:element ref="voxb:institutionId"/>
 				</xs:sequence>
 				<xs:element ref="voxb:voxbIdentifier"/>
 			</xs:choice>

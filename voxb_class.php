@@ -584,12 +584,15 @@ class voxb extends webServiceServer {
       return self::_error(USERID_INVALID_MUST_BE_AN_INTEGER);
     }
 
+    $institutionId = str_replace("'", "''", strip_tags($params->institutionId->_value));
+
     /* fetch by userid */
     $userId = $params->userId->_value;
     $this->log->set_userId($userId);
     $this->oci->bind('userId', $userId);
+    $this->oci->bind('institutionId', $institutionId);
     try {
-      $this->oci->set_query("SELECT userId FROM voxb_users WHERE userId=:userId AND disabled IS NULL");
+      $this->oci->set_query("SELECT userId FROM voxb_users WHERE userId=:userId AND institutionId=:institutionId AND disabled IS NULL");
       $data = $this->oci->fetch_into_assoc();
     } catch (ociException $e) {
       return self::_error(ERROR_FETCHING_USER_FROM_DATABASE);
@@ -599,7 +602,7 @@ class voxb extends webServiceServer {
       return self::_error(COULD_NOT_FIND_USER);
     }
 
-    try { $this->oci->set_query("UPDATE voxb_users SET disabled=1 WHERE userId=$userId"); }
+    try { $this->oci->set_query("UPDATE voxb_users SET disabled=1 WHERE userId=$userId AND institutionId=$institutionId"); }
     catch (ociException $e) {
       verbose::log(FATAL, "deleteUser(".__LINE__."):: OCI update error: " . $this->oci->get_error_string());
       return self::_error(ERROR_DELETING_USER_FROM_DATABASE);
@@ -633,12 +636,15 @@ class voxb extends webServiceServer {
     if (!is_numeric($params->userId->_value)) {
       return self::_error(USERID_INVALID_MUST_BE_AN_INTEGER);
     }
+		$institutionId = str_replace("'", "''", strip_tags($params->institutionId->_value));
+    
 
     $userId = $params->userId->_value;
     $this->log->set_userId($userId);
     $this->oci->bind('userId', $userId);
+    $this->oci->bind('institutionId', $institutionId);
     try {
-      $this->oci->set_query("SELECT userId FROM voxb_users WHERE userId=:userId AND disabled=1");
+      $this->oci->set_query("SELECT userId FROM voxb_users WHERE userId=:userId AND institutionId=:institutionId AND disabled=1");
       $data = $this->oci->fetch_into_assoc();
     } catch (ociException $e) {
       return self::_error(ERROR_FETCHING_USER_FROM_DATABASE);
@@ -649,7 +655,7 @@ class voxb extends webServiceServer {
     }
 
     try {
-      $this->oci->set_query("UPDATE voxb_users SET disabled=NULL WHERE userId=$userId");
+      $this->oci->set_query("UPDATE voxb_users SET disabled=NULL WHERE userId=$userId AND institutionId=$institutionId");
     } catch (ociException $e) {
       verbose::log(FATAL, "undeleteUser(".__LINE__."):: OCI update error: " . $this->oci->get_error_string());
       return self::_error(ERROR_UNDELETING_USER_FROM_DATABASE);
@@ -841,9 +847,16 @@ class voxb extends webServiceServer {
       return self::_error(COULD_NOT_FIND_ITEM);
     }
 
+		$institutionId = str_replace("'", "''", strip_tags($fetchData[0]->_value->institutionId->_value));
+
     // Fetch locals data
     try {
-      $this->oci->set_query("select LOCALID, ITEMID, DATA, TYPE, ITEMTYPE from voxb_locals where ITEMID in (" . implode(",", array_keys($item_data)) . ")");
+			if(!empty($institutionId)) {
+      	$this->oci->bind('institutionId', $institutionId);
+      	$this->oci->set_query("select LOCALID, ITEMID, DATA, TYPE, ITEMTYPE from voxb_locals where ITEMID in (" . implode(",", array_keys($item_data)) . ") AND itemid=(select itemidentifiervalue from voxb_items where userid IN (select userid from voxb_users where institutionId=:institutionId))");
+			} else {
+				$this->oci->set_query("select LOCALID, ITEMID, DATA, TYPE, ITEMTYPE from voxb_locals where ITEMID in (" . implode(",", array_keys($item_data)) . ")");
+			}
       while ($data = $this->oci->fetch_into_assoc()) {
         $locals_data[$data['LOCALID']] = $data;
       }
@@ -1680,9 +1693,12 @@ class voxb extends webServiceServer {
     }
     $this->log->set_userId($params->userId->_value);
 
+		$institutionId = str_replace("'", "''", strip_tags($params->institutionId->_value));
+
     try {
       $this->oci->bind("userId", $params->userId->_value);
-      $this->oci->set_query("select userid from voxb_users where userId=:userId AND disabled IS NULL");
+      $this->oci->bind("institutionId", $params->institutionId->_value);
+      $this->oci->set_query("select userid from voxb_users where userId=:userId AND institutionId=:institutionId  AND disabled IS NULL");
       $data = $this->oci->fetch_into_assoc();
     } catch (ociException $e) {
       verbose::log(FATAL, "updateUser(".__LINE__."):: OCI select error: " . $this->oci->get_error_string());
@@ -1732,7 +1748,7 @@ class voxb extends webServiceServer {
     $targets = implode($targets, ',');
 
     try {
-      $query = "UPDATE voxb_users SET $targets where userid=$userid";
+      $query = "UPDATE voxb_users SET $targets where userid=$userid AND institutionId=$institutionId";
       $this->oci->set_query($query);
       $this->oci->commit();
     } catch (ociException $e) {

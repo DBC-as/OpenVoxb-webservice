@@ -3,6 +3,7 @@
    <soapenv:Body>
       <voxb:undeleteUserRequest>
          <voxb:userId>31</voxb:userId>
+         <voxb:institutionId>1</voxb:institutionId>
       </voxb:undeleteUserRequest>
    </soapenv:Body>
 </soapenv:Envelope>

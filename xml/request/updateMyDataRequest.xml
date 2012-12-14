@@ -3,6 +3,7 @@
    <soapenv:Body>
       <voxb:updateMyDataRequest>
          <voxb:voxbIdentifier>16</voxb:voxbIdentifier>
+         <voxb:institutionId>1</voxb:institutionId>
          <voxb:item>
             <!--Optional:-->
             <voxb:rating>13</voxb:rating>

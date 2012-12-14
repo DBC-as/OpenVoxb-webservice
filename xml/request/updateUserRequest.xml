@@ -3,6 +3,7 @@
    <soapenv:Body>
       <voxb:updateUserRequest>
          <voxb:userId>31</voxb:userId>
+         <voxb:institutionId>1</voxb:institutionId>
          <voxb:userAlias>
             <voxb:aliasName>AndersVestergaard</voxb:aliasName>
          </voxb:userAlias>

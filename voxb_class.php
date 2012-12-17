@@ -484,9 +484,13 @@ class voxb extends webServiceServer {
 
     /* fetch by voxbIdentifier */
     $voxbIdentifier = $params->voxbIdentifier->_value;
+    $institutionId = str_replace("'", "''", strip_tags($params->institutionId->_value));
+    $this->oci->bind('voxbIdentifier', $voxbIdentifier);
+    $this->oci->bind('institutionId', $institutionId);
+
     try {
-      $this->oci->bind('voxbIdentifier', $voxbIdentifier);
-      $this->oci->set_query("SELECT itemidentifiervalue, objectid, userid FROM voxb_items WHERE itemidentifiervalue=:voxbIdentifier AND disabled IS NULL");
+
+      $this->oci->set_query("SELECT itemidentifiervalue, objectid, userid FROM voxb_items WHERE itemidentifiervalue=:voxbIdentifier AND disabled IS NULL AND userid IN (select userid from voxb_users where institutionId=:institutionId)");
       $data = $this->oci->fetch_into_assoc();
     } catch (ociException $e) {
       return self::_error(ERROR_FETCHING_ITEM_FROM_DATABASE);
@@ -541,9 +545,13 @@ class voxb extends webServiceServer {
     }
 
     $voxbIdentifier = $params->voxbIdentifier->_value;
+    $institutionId = str_replace("'", "''", strip_tags($params->institutionId->_value));
+
     $this->oci->bind('voxbIdentifier', $voxbIdentifier);
+    $this->oci->bind('institutionId', $institutionId);
+
     try {
-      $this->oci->set_query("SELECT itemidentifiervalue, userid FROM voxb_items WHERE itemidentifiervalue=:voxbIdentifier AND disabled=1");
+      $this->oci->set_query("SELECT itemidentifiervalue, userid FROM voxb_items WHERE itemidentifiervalue=:voxbIdentifier AND disabled=1 AND userid IN (select userid from voxb_users where institutionId=:institutionId)");
       $data = $this->oci->fetch_into_assoc();
     } catch (ociException $e) {
       return self::_error(ERROR_FETCHING_ITEM_FROM_DATABASE);
@@ -1529,9 +1537,12 @@ class voxb extends webServiceServer {
     }
 
     $voxbIdentifier = strip_tags($params->voxbIdentifier->_value);
+    $institutionId = str_replace("'", "''", strip_tags($params->institutionId->_value));
+    $this->oci->bind('voxbIdentifier', $voxbIdentifier);
+    $this->oci->bind('institutionId', $institutionId);
+
     try {
-      $this->oci->bind("voxbIdentifier", $voxbIdentifier);
-      $this->oci->set_query("select ITEMIDENTIFIERVALUE,OBJECTID,USERID from voxb_items where ITEMIDENTIFIERVALUE=:voxbIdentifier AND disabled IS NULL");
+      $this->oci->set_query("select ITEMIDENTIFIERVALUE,OBJECTID,USERID from voxb_items where ITEMIDENTIFIERVALUE=:voxbIdentifier AND disabled IS NULL AND userid IN (select userid from voxb_users where institutionId=:institutionId)");
       $data = $this->oci->fetch_into_assoc();
     } catch (ociException $e) {
       verbose::log(FATAL, "updateMyData(".__LINE__."):: OCI select error: " . $this->oci->get_error_string());

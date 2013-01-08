@@ -27,7 +27,7 @@ if ($http_error = $config->get_value('service_http_error', 'setup')) {
 
 $ucd_oci_login 	= $config->get_value("ucdlogon", "setup");
 $voxb_oci_login = $config->get_value("ocilogon", "setup");
-$voxb_ws_url		=	$config->get_value("openxid_url", "setup");
+$voxb_ws_url		=	$config->get_value("voxb_url", "setup");
 
 $bibdk_ws_url		= 'http://webservice.bibliotek.dk/soeg/?version=1.1&operation=searchRetrieve&query=rec.id+%3D+(BIBLIOGRAPHIC_ID)+and+bath.possessingInstitution+%3D+(RECORD_OWNER)&startRecord=1&maximumRecords=1&recordSchema=dc';
 

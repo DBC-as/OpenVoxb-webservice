@@ -155,7 +155,7 @@ alter table voxb_objects modify(OBJECTCONTRIBUTORS varchar(255));
 
 /* change constraint on voxb_users */
 alter table voxb_users drop constraint "REF_USERS_ID"
-ALTER TABLE VOXB_USERS ADD CONSTRAINT "REF_USERS_ID" FOREIGN KEY ("INSTITUTIONID") REFERENCES "MKR"."VOXB_INSTITUTIONS" ("INSTITUTIONID") ON DELETE CASCADE ENABLE;
+ALTER TABLE VOXB_USERS ADD CONSTRAINT "REF_USERS_ID" FOREIGN KEY ("INSTITUTIONID") REFERENCES "VOXB_INSTITUTIONS" ("INSTITUTIONID") ON DELETE CASCADE ENABLE;
 
 /* change constraints on voxb_complaints */
 alter table voxb_complaints drop constraint "REF_COM_ITEMID"

@@ -878,6 +878,11 @@ class voxb extends webServiceServer {
 					}
 				}
 			}
+
+			if (empty($item_data)) {
+      	return self::_error(COULD_NOT_FIND_ITEM);
+    	}
+
 			$this->oci->set_query("select LOCALID, ITEMID, DATA, TYPE, ITEMTYPE from voxb_locals where ITEMID in (" . implode(",", array_keys($item_data)) . ")");
       while ($data = $this->oci->fetch_into_assoc()) {
         $locals_data[$data['LOCALID']] = $data;

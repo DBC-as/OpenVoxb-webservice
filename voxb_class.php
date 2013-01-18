@@ -857,14 +857,28 @@ class voxb extends webServiceServer {
 
 		$institutionId = str_replace("'", "''", strip_tags($fetchData[0]->_value->institutionId->_value));
 
-    // Fetch locals data
+    // Fetch locals data mkr
     try {
 			if(!empty($institutionId)) {
-      	$this->oci->bind('institutionId', $institutionId);
-      	$this->oci->set_query("select LOCALID, ITEMID, DATA, TYPE, ITEMTYPE from voxb_locals where ITEMID in (" . implode(",", array_keys($item_data)) . ") AND itemid=(select itemidentifiervalue from voxb_items where userid IN (select userid from voxb_users where institutionId=:institutionId))");
-			} else {
-				$this->oci->set_query("select LOCALID, ITEMID, DATA, TYPE, ITEMTYPE from voxb_locals where ITEMID in (" . implode(",", array_keys($item_data)) . ")");
+				$delete=array();
+				foreach($item_data as $v) {
+					$userids[]=$v['USERID'];
+				}
+				$this->oci->set_query("select userid,institutionid from voxb_users where userid IN (" . implode(",", $userids) . ")");
+				$udata = $this->oci->fetch_all_into_assoc();
+				foreach($udata as $k=>$v) {
+					if($v['INSTITUTIONID']!=$institutionId) {
+						$uid=$v['USERID'];
+						$delete[$uid]=$uid;
+					}
+				}
+				foreach($item_data as $k=>$v) {
+					if(in_array($v['USERID'],$delete)) {
+						unset($item_data[$k]);
+					}
+				}
 			}
+			$this->oci->set_query("select LOCALID, ITEMID, DATA, TYPE, ITEMTYPE from voxb_locals where ITEMID in (" . implode(",", array_keys($item_data)) . ")");
       while ($data = $this->oci->fetch_into_assoc()) {
         $locals_data[$data['LOCALID']] = $data;
       }

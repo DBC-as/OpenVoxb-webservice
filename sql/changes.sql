@@ -154,26 +154,26 @@ alter table voxb_tags add constraint ref_tag_id foreign key (itemid) references 
 alter table voxb_objects modify(OBJECTCONTRIBUTORS varchar(255));
 
 /* change constraint on voxb_users */
-alter table voxb_users drop constraint "REF_USERS_ID"
+alter table voxb_users drop constraint "REF_USERS_ID";
 ALTER TABLE VOXB_USERS ADD CONSTRAINT "REF_USERS_ID" FOREIGN KEY ("INSTITUTIONID") REFERENCES "VOXB_INSTITUTIONS" ("INSTITUTIONID") ON DELETE CASCADE ENABLE;
 
 /* change constraints on voxb_complaints */
-alter table voxb_complaints drop constraint "REF_COM_ITEMID"
+alter table voxb_complaints drop constraint "REF_COM_ITEMID";
 
 ALTER TABLE "VOXB_COMPLAINTS" ADD CONSTRAINT "REF_COM_ITEMID" FOREIGN KEY ("OFFENDING_ITEMID")
           REFERENCES "VOXB_ITEMS" ("ITEMIDENTIFIERVALUE") ON DELETE CASCADE ENABLE;
 
-alter table voxb_complaints drop constraint "REF_COM_USERID"
+alter table voxb_complaints drop constraint "REF_COM_USERID";
 
 ALTER TABLE "VOXB_COMPLAINTS" ADD CONSTRAINT "REF_COM_USERID" FOREIGN KEY ("COMPLAINANT_USERID")
           REFERENCES "VOXB_USERS" ("USERID") ON DELETE CASCADE ENABLE;
 
-alter table voxb_complaints drop constraint "REF_OFF_INSTITUTIONID"
+alter table voxb_complaints drop constraint "REF_OFF_INSTITUTIONID";
 
 ALTER TABLE "VOXB_COMPLAINTS" ADD CONSTRAINT "REF_OFF_INSTITUTIONID" FOREIGN KEY ("OFFENDER_INSTITUTIONID")
           REFERENCES "VOXB_INSTITUTIONS" ("INSTITUTIONID") ON DELETE CASCADE ENABLE;
           
-alter table voxb_complaints drop constraint "REF_OFF_USERID"
+alter table voxb_complaints drop constraint "REF_OFF_USERID";
 
 ALTER TABLE "VOXB_COMPLAINTS" ADD CONSTRAINT "REF_OFF_USERID" FOREIGN KEY ("OFFENDER_USERID")
           REFERENCES "VOXB_USERS" ("USERID") ON DELETE CASCADE ENABLE;

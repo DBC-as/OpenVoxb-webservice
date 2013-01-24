@@ -171,6 +171,7 @@ function create_data($userid, $reviewdata='', $rating='', $title='', $contributo
    <soapenv:Body>
       <voxb:createMyDataRequest>
          <voxb:userId>'.$userid.'</voxb:userId>
+				 <voxb:institutionId>1</voxb:institutionId>
          <voxb:item>';
 
 	if(!empty($rating)) { 

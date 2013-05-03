@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:voxb="http://oss.dbc.dk/ns/voxb">
-   <soapenv:Body>
-      <voxb:reportOffensiveContentRequest>
-         <voxb:userId>31</voxb:userId>
-         <voxb:voxbIdentifier>2</voxb:voxbIdentifier>
-      </voxb:reportOffensiveContentRequest>
-   </soapenv:Body>
-</soapenv:Envelope>

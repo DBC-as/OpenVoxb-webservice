@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:voxb="http://oss.dbc.dk/ns/voxb">
-   <soapenv:Body>
-      <voxb:deleteUserRequest>
-         <voxb:userId>31</voxb:userId>
-         <voxb:institutionId>1</voxb:institutionId>
-      </voxb:deleteUserRequest>
-   </soapenv:Body>
-</soapenv:Envelope>

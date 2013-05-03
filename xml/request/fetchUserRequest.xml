@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:voxb="http://oss.dbc.dk/ns/voxb">
-   <soapenv:Body>
-      <voxb:fetchUserRequest>
-         <voxb:userId>26</voxb:userId>
-      </voxb:fetchUserRequest>
-   </soapenv:Body>
-</soapenv:Envelope>
